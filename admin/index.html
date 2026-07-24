@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qiandu Auto - Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Login Page -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <h1>Qiandu Auto</h1>
+    <p class="subtitle">Admin Panel &mdash; Sign in to manage your site</p>
+    <input type="password" id="loginPass" placeholder="Enter admin password">
+    <button class="btn" onclick="handleLogin()">Sign In</button>
+    <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- Admin Dashboard -->
+<div class="admin-page" id="adminPage">
+  <header class="admin-header">
+    <div class="logo"><span>Q</span> QianduAuto Admin</div>
+    <div class="user-info">
+      <span>Welcome, Admin</span>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+  <div class="admin-body">
+    <nav class="admin-sidebar">
+      <a href="#" data-section="sec-dashboard" class="active" onclick="showSection('sec-dashboard')">&#9632; Dashboard</a>
+      <a href="#" data-section="sec-inquiries" onclick="showSection('sec-inquiries')">&#9993; Inquiries</a>
+      <a href="#" data-section="sec-vehicles" onclick="showSection('sec-vehicles')">&#128663; Vehicles</a>
+      <a href="#" data-section="sec-settings" onclick="showSection('sec-settings')">&#9881; Settings</a>
+    </nav>
+    <main class="admin-main">
+
+      <!-- Dashboard -->
+      <div class="admin-section active" id="sec-dashboard">
+        <div class="section-header"><h2>Dashboard</h2></div>
+        <div class="stats-grid">
+          <div class="stat-card accent"><div class="number" id="statVehicles">0</div><div class="label">Vehicles Listed</div></div>
+          <div class="stat-card green"><div class="number" id="statInquiries">0</div><div class="label">Total Inquiries</div></div>
+          <div class="stat-card blue"><div class="number" id="statNew">0</div><div class="label">New Inquiries</div></div>
+        </div>
+        <p style="color:var(--text-light);font-size:13px;line-height:1.7">
+          Welcome to your admin panel. Inquiries from the frontend contact form will appear here when submitted.<br>
+          Use the <strong>Vehicles</strong> section to manage your car inventory, and <strong>Settings</strong> to change your password.
+        </p>
+      </div>
+
+      <!-- Inquiries -->
+      <div class="admin-section" id="sec-inquiries">
+        <div class="section-header"><h2>Customer Inquiries</h2></div>
+        <div class="data-table">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Message</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="inquiryList"><tr><td colspan="6" style="text-align:center;color:var(--text-light);padding:32px">No inquiries yet</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vehicles -->
+      <div class="admin-section" id="sec-vehicles">
+        <div class="section-header">
+          <h2>Vehicle Inventory</h2>
+          <button class="btn btn-primary" onclick="openAddVehicle()">+ Add Vehicle</button>
+        </div>
+        <div class="data-table">
+          <table>
+            <thead><tr><th>Year</th><th>Make / Model</th><th>Mileage</th><th>Engine</th><th>Price</th><th>Action</th></tr></thead>
+            <tbody id="vehicleList"><tr><td colspan="6" style="text-align:center;color:var(--text-light);padding:32px">No vehicles yet</tr></tbody>
+          </table>
+        </div>
+        <div style="margin-top:16px">
+          <button class="btn btn-outline" onclick="addSampleData()">Add Sample Vehicles</button>
+          <span style="font-size:12px;color:var(--text-light);margin-left:12px">Note: These are stored locally. To update the public site, edit js/script.js</span>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="admin-section" id="sec-settings">
+        <div class="section-header"><h2>Settings</h2></div>
+        <div class="settings-section">
+          <h3>Change Password</h3>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPass" placeholder="Enter new password">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPass" placeholder="Confirm new password">
+          </div>
+          <button class="btn btn-primary" onclick="savePassword()">Update Password</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Vehicle Modal -->
+<div class="modal" id="vehicleModal">
+  <div class="modal-content">
+    <h3 id="vehicleFormTitle">Add Vehicle</h3>
+    <input type="hidden" id="vehicleIdx">
+    <div class="form-grid">
+      <div class="form-group"><label>Make / Model *</label><input id="vMake" placeholder="e.g. Toyota Camry"></div>
+      <div class="form-group"><label>Year</label><input id="vYear" placeholder="e.g. 2021"></div>
+      <div class="form-group"><label>Mileage</label><input id="vMileage" placeholder="e.g. 45,000 km"></div>
+      <div class="form-group"><label>Engine</label><input id="vEngine" placeholder="e.g. 2.5L"></div>
+      <div class="form-group"><label>Price (FOB)</label><input id="vPrice" placeholder="e.g. $15,800"></div>
+      <div class="form-group"><label>Tag</label><input id="vTag" placeholder="e.g. In Stock, Premium"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('vehicleModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveVehicle()">Save Vehicle</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
