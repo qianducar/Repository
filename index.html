@@ -8,7 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a3a5c'/%3E%3Ctext x='50' y='68' font-size='45' text-anchor='middle' fill='white' font-family='Arial'%3EQ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/i18n.css">
 </head>
 <body>
 <nav class="nav" id="nav">
@@ -18,11 +18,11 @@
       <span class="logo-text">Qiandu<span class="logo-accent">Auto</span></span>
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#inventory">Inventory</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#process">How It Works</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+      <li><a href="#inventory" data-i18n="nav-inventory">Inventory</a></li>
+      <li><a href="#services" data-i18n="nav-services">Services</a></li>
+      <li><a href="#process" data-i18n="nav-process">How It Works</a></li>
+      <li><a href="#about" data-i18n="nav-about">About</a></li>
+      <li><a href="#contact" class="nav-cta" data-i18n="nav-cta">Get a Quote</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -33,30 +33,30 @@
   <div class="hero-bg"></div>
   <div class="container hero-inner">
     <div class="hero-content">
-      <span class="hero-badge">Premium Used Car Export</span>
-      <h1>Quality Vehicles,<br><span class="text-accent">Global Delivery</span></h1>
-      <p>Trusted exporter of pre-owned vehicles from China to markets worldwide. Every car inspected, certified, and ready for export.</p>
+      <span class="hero-badge" data-i18n="hero-badge">Premium Used Car Export</span>
+      <h1>Quality Vehicles,<br><span class="text-accent" data-i18n-part="hero-accent">Global Delivery</span></h1>
+      <p data-i18n="hero-desc">Trusted exporter of pre-owned vehicles from China to markets worldwide. Every car inspected, certified, and ready for export.</p>
       <div class="hero-actions">
-        <a href="#inventory" class="btn btn-primary">Browse Inventory</a>
-        <a href="#contact" class="btn btn-outline">Contact Us</a>
+        <a href="#inventory" class="btn btn-primary" data-i18n="hero-btn1">Browse Inventory</a>
+        <a href="#contact" class="btn btn-outline" data-i18n="hero-btn2">Contact Us</a>
       </div>
     </div>
     <div class="hero-stats">
       <div class="stat-card">
         <span class="stat-number" data-target="500">0</span><span class="stat-plus">+</span>
-        <span class="stat-label">Vehicles Exported</span>
+        <span class="stat-label" data-i18n="stat-vehicles">Vehicles Exported</span>
       </div>
       <div class="stat-card">
         <span class="stat-number" data-target="25">0</span><span class="stat-plus">+</span>
-        <span class="stat-label">Countries Served</span>
+        <span class="stat-label" data-i18n="stat-countries">Countries Served</span>
       </div>
       <div class="stat-card">
         <span class="stat-number" data-target="8">0</span><span class="stat-plus">+</span>
-        <span class="stat-label">Years Experience</span>
+        <span class="stat-label" data-i18n="stat-experience">Years Experience</span>
       </div>
       <div class="stat-card">
         <span class="stat-number" data-target="98">0</span><span class="stat-pct">%</span>
-        <span class="stat-label">Client Satisfaction</span>
+        <span class="stat-label" data-i18n="stat-satisfaction">Client Satisfaction</span>
       </div>
     </div>
   </div>
@@ -64,52 +64,52 @@
 <section class="section" id="inventory">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Featured Vehicles</span>
-      <h2>Current Inventory</h2>
-      <p>Hand-picked vehicles ready for immediate export. All prices are FOB (Free on Board).</p>
+      <span class="section-tag" data-i18n="inv-tag">Featured Vehicles</span>
+      <h2 data-i18n="inv-title">Current Inventory</h2>
+      <p data-i18n="inv-desc">Hand-picked vehicles ready for immediate export. All prices are FOB (Free on Board).</p>
     </div>
     <div class="inventory-grid" id="inventoryGrid"></div>
     <div class="section-footer">
-      <a href="#contact" class="btn btn-primary">Request Full Inventory List</a>
+      <a href="#contact" class="btn btn-primary" data-i18n="inv-footer">Request Full Inventory List</a>
     </div>
   </div>
 </section>
 <section class="section section-dark" id="services">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">What We Offer</span>
-      <h2>End-to-End Export Services</h2>
-      <p>From vehicle sourcing to door-to-door delivery, we handle every step.</p>
+      <span class="section-tag" data-i18n="svc-tag">What We Offer</span>
+      <h2 data-i18n="svc-title">End-to-End Export Services</h2>
+      <p data-i18n="svc-desc">From vehicle sourcing to door-to-door delivery, we handle every step.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg></div>
-        <h3>Vehicle Sourcing</h3>
+        <h3 data-i18n="svc1-title">Vehicle Sourcing</h3>
         <p>Access to a wide network of auctions, dealerships, and direct owners across China. We find the exact make and model you need.</p>
       </div>
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-6-4-8-8c-2-4-1-9 4-10 3-1 6 1 6 1s3-2 6-1c5 1 6 6 4 10-2 4-8 8-8 8z"/></svg></div>
-        <h3>Quality Inspection</h3>
+        <h3 data-i18n="svc2-title">Quality Inspection</h3>
         <p>Comprehensive 180-point inspection by certified mechanics. Detailed reports with photos included for every vehicle.</p>
       </div>
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 23 8 23 18 8 18 8 13"/><path d="M12 16v4M8 20h8"/></svg></div>
-        <h3>Shipping &amp; Logistics</h3>
+        <h3 data-i18n="svc3-title">Shipping &amp; Logistics</h3>
         <p>RoRo and container shipping options to major ports worldwide. Full tracking and insurance included.</p>
       </div>
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
-        <h3>Documentation</h3>
+        <h3 data-i18n="svc4-title">Documentation</h3>
         <p>Complete paperwork handled: export certificates, customs clearance, bill of lading, and import compliance support.</p>
       </div>
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>After-Sales Support</h3>
+        <h3 data-i18n="svc5-title">After-Sales Support</h3>
         <p>Dedicated account manager from inquiry to delivery. Ongoing support for parts, maintenance, and repeat orders.</p>
       </div>
       <div class="service-card">
         <div class="service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16v-2"/><path d="M3.3 7l8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
-        <h3>Bulk Orders</h3>
+        <h3 data-i18n="svc6-title">Bulk Orders</h3>
         <p>Special pricing for container-load orders. Mix and match different models to fill a container and save on shipping.</p>
       </div>
     </div>
@@ -118,32 +118,32 @@
 <section class="section" id="process">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Simple Process</span>
-      <h2>How It Works</h2>
-      <p>Four simple steps to get your vehicle delivered to your destination.</p>
+      <span class="section-tag" data-i18n="proc-tag">Simple Process</span>
+      <h2 data-i18n="proc-title">How It Works</h2>
+      <p data-i18n="proc-desc">Four simple steps to get your vehicle delivered to your destination.</p>
     </div>
     <div class="process-steps">
       <div class="step">
         <div class="step-number">01</div>
-        <h3>Select &amp; Inquire</h3>
+        <h3 data-i18n="step1-title">Select &amp; Inquire</h3>
         <p>Browse our inventory or tell us your requirements. We will source the perfect vehicle for your market.</p>
       </div>
       <div class="step-connector"></div>
       <div class="step">
         <div class="step-number">02</div>
-        <h3>Inspect &amp; Confirm</h3>
+        <h3 data-i18n="step2-title">Inspect &amp; Confirm</h3>
         <p>Receive detailed inspection report, photos, and video. Confirm your order with deposit.</p>
       </div>
       <div class="step-connector"></div>
       <div class="step">
         <div class="step-number">03</div>
-        <h3>Payment &amp; Documentation</h3>
+        <h3 data-i18n="step3-title">Payment &amp; Documentation</h3>
         <p>Secure payment processed. We handle all export documentation and customs clearance.</p>
       </div>
       <div class="step-connector"></div>
       <div class="step">
         <div class="step-number">04</div>
-        <h3>Shipping &amp; Delivery</h3>
+        <h3 data-i18n="step4-title">Shipping &amp; Delivery</h3>
         <p>Vehicle shipped via RoRo or container. Track your shipment until it arrives at your port.</p>
       </div>
     </div>
@@ -153,7 +153,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-content">
-        <span class="section-tag">About Us</span>
+        <span class="section-tag" data-i18n="about-tag">About Us</span>
         <h2>Your Trusted Partner in Used Car Export</h2>
         <p>With over 8 years in the automotive export industry, Qiandu Auto has built a reputation for reliability, quality, and competitive pricing. We connect global buyers with China vast automotive market.</p>
         <p>Our team conducts rigorous quality checks on every vehicle, ensures complete documentation, and manages logistics from pickup to port delivery. Whether you need one vehicle or a container load, we deliver.</p>
@@ -177,7 +177,7 @@
   <div class="container">
     <div class="contact-grid">
       <div class="contact-info">
-        <span class="section-tag">Get In Touch</span>
+        <span class="section-tag" data-i18n="contact-tag">Get In Touch</span>
         <h2>Ready to Import?<br>Let's Talk.</h2>
         <p>Tell us what you're looking for and we will find the best options for your market.</p>
         <div class="contact-details">
@@ -242,16 +242,16 @@
         <p>Professional used car export service from China to the world. Quality vehicles, trusted service, global reach.</p>
       </div>
       <div class="footer-links">
-        <h4>Quick Links</h4>
+        <h4 data-i18n="footer-quick">Quick Links</h4>
         <ul>
-          <li><a href="#inventory">Inventory</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#process">How It Works</a></li>
+          <li><a href="#inventory" data-i18n="nav-inventory">Inventory</a></li>
+          <li><a href="#services" data-i18n="nav-services">Services</a></li>
+          <li><a href="#process" data-i18n="nav-process">How It Works</a></li>
           <li><a href="#about">About Us</a></li>
         </ul>
       </div>
       <div class="footer-links">
-        <h4>Services</h4>
+        <h4 data-i18n="footer-service-title">Services</h4>
         <ul>
           <li><a href="#services">Vehicle Sourcing</a></li>
           <li><a href="#services">Inspection</a></li>
@@ -260,7 +260,7 @@
         </ul>
       </div>
       <div class="footer-contact">
-        <h4>Contact</h4>
+        <h4 data-i18n="footer-contact-title">Contact</h4>
         <p>hello@qianduauto.me</p>
         <p>Guangzhou, China</p>
       </div>
@@ -270,6 +270,7 @@
     </div>
   </div>
 </footer>
+<script src="js/i18n.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>

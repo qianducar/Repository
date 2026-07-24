@@ -1,0 +1,8 @@
+﻿.lang-switcher { display: flex; gap: 4px; margin-left: 16px; }
+.lang-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; letter-spacing: 0.5px; }
+.lang-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.lang-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+@media (max-width: 640px) {
+  .lang-switcher { margin: 8px 0 0; }
+  .nav-links.active + .lang-switcher { display: flex; }
+}
