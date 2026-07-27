@@ -133,11 +133,10 @@ function switchLang(lang) {
 
 // Inventory data — real vehicles
 const inventory = [
-  { make: "Land Cruiser 2012, 4.0L Auto VX", year: "2014年07月", mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "images/land-cruiser-2012-1.jpg" },
-  { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: "2016年09月", mileage: "11.1万公里", engine: "自动 / 4L", price: "USD 61,738.60", tag: "In Stock", image: "images/land-cruiser-2016-vxr-1.jpg" },
-  { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: "2026年01月", mileage: "0.9万公里", engine: "自动 / 2.4T", price: "USD 75,034", tag: "Premium", image: "images/prado-2025-flagship-vx-1.jpg" },
-  { make: "Toyota bZ7 (BoZhi 7) 2025 — EV", year: "2026年04月", mileage: "0.3万公里", engine: "纯电 EV", price: "$28,020", tag: "In Stock", image: "images/toyota-bz7-2025-1.jpg" },
-  { make: "BYD Tang L 2025 DM 175KM Drone Player Edition", year: "2025年04月", mileage: "0.32万公里", engine: "自动 / 1.5L PHEV", price: "$27,000", tag: "In Stock", image: "images/byd-tangl-2025-1.png" }
+  { make: "Land Cruiser 2012, 4.0L Auto VX", year: "2014年01月", mileage: "5.2万公里", engine: "4.0L", price: "$63,038", tag: "Premium", image: "images/land-cruiser-2012-1.jpg" },
+  { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: "2016年01月", mileage: "11.1万公里", engine: "4.0L", price: "$61,738.6", tag: "Premium", image: "images/land-cruiser-2016-vxr-1.jpg" },
+  { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: "2025年01月", mileage: "9000公里", engine: "2.4T", price: "$75,034", tag: "Premium", image: "images/prado-2025-flagship-vx-1.jpg" },
+  { make: "Toyota bZ7 (BoZhi 7) 2025", year: "2025年01月", mileage: "3000公里", engine: "EV", price: "$28,020", tag: "Premium", image: "images/toyota-bz7-2025-1.jpg" }
 ];
   
 
