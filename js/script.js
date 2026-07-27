@@ -133,7 +133,10 @@ function switchLang(lang) {
 
 // Sample inventory data — replace with your actual vehicles
 const inventory = [
-  { make: "Toyota Camry", year: 2021, mileage: "45,000 km", engine: "2.5L", price: "$15,800", tag: "In Stock", image: "" },
+ // 车辆数据 — 由管理后台生成
+const inventory = [
+  { make: "Land Cruiser 2012, 4.0L Auto VX", year: 2014年07月, mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)" }
+];
   { make: "Honda Accord", year: 2022, mileage: "32,000 km", engine: "1.5T", price: "$18,200", tag: "In Stock", image: "" },
   { make: "BMW X5", year: 2020, mileage: "55,000 km", engine: "3.0T", price: "$32,500", tag: "Premium", image: "" },
   { make: "Mercedes C200", year: 2021, mileage: "38,000 km", engine: "1.5T", price: "$26,800", tag: "In Stock", image: "" },
