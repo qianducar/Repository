@@ -1,127 +1,629 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Qiandu Auto - Admin Panel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2d5a87;
+    --accent: #e8a838;
+    --danger: #dc3545;
+    --success: #27ae60;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --bg: #f4f6f9;
+    --white: #fff;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* Login */
+  .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+  .login-box { background: var(--white); padding: 48px 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); text-align: center; width: 400px; max: 90vw; }
+  .login-box h1 { font-size: 28px; margin-bottom: 4px; color: var(--primary); }
+  .login-box .subtitle { color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
+  .login-box input { width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; margin-bottom: 16px; outline: none; transition: border-color .2s; }
+  .login-box input:focus { border-color: var(--primary); }
+  .login-error { color: var(--danger); font-size: 13px; margin-top: 12px; display: none; }
+
+  /* Admin Layout */
+  .admin-page { display: none; }
+  .admin-header { background: var(--white); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 20px; font-weight: 800; color: var(--primary); }
+  .logo span { color: var(--accent); }
+  .user-info { display: flex; align-items: center; gap: 16px; }
+  .logout-btn { padding: 8px 20px; border: none; background: #f0f0f0; border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text); transition: all .2s; }
+  .logout-btn:hover { background: var(--danger); color: #fff; }
+
+  .admin-body { display: flex; max-width: 1400px; margin: 0 auto; }
+  .admin-sidebar { width: 220px; background: var(--white); min-height: calc(100vh - 62px); padding: 20px 0; box-shadow: 2px 0 8px rgba(0,0,0,0.04); position: sticky; top: 62px; height: calc(100vh - 62px); overflow-y: auto; }
+  .admin-sidebar a { display: block; padding: 12px 24px; color: var(--text-light); text-decoration: none; font-size: 14px; font-weight: 500; transition: all .2s; border-left: 3px solid transparent; }
+  .admin-sidebar a:hover, .admin-sidebar a.active { background: #f0f4ff; color: var(--primary); border-left-color: var(--primary); }
+  .admin-main { flex: 1; padding: 28px; }
+
+  /* Sections */
+  .admin-section { display: none; animation: fadeIn .3s ease; }
+  .admin-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .section-header h2 { font-size: 22px; font-weight: 800; color: var(--primary); }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+  .stat-card { background: var(--white); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); }
+  .stat-card .number { font-size: 36px; font-weight: 900; color: var(--primary); }
+  .stat-card.accent .number { color: var(--accent); }
+  .stat-card.green .number { color: var(--success); }
+  .stat-card.blue .number { color: var(--primary-light); }
+  .stat-card .label { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+
+  /* Buttons */
+  .btn { padding: 10px 22px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .2s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-light); }
+  .btn-accent { background: var(--accent); color: var(--primary); }
+  .btn-accent:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-outline { background: transparent; border: 2px solid #ddd; color: var(--text); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { opacity: .9; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+  .btn-success { background: var(--success); color: #fff; }
+
+  /* Table */
+  .data-table { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .data-table table { width: 100%; border-collapse: collapse; }
+  .data-table th { background: #f8f9fa; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: .5px; }
+  .data-table td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+  .data-table tr:hover td { background: #fafbfc; }
+
+  /* Forms */
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; border: 2px solid #e8e8e8; border-radius: 8px; font-size: 14px; outline: none; transition: border-color .2s; font-family: inherit; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--primary); }
+  .form-group textarea { min-height: 80px; resize: vertical; }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+  /* Modal */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal.show { display: flex; }
+  .modal-content { background: var(--white); padding: 32px; border-radius: 16px; width: 600px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
+  .modal-content h3 { font-size: 20px; margin-bottom: 20px; color: var(--primary); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* Code Output */
+  .code-output { margin-top: 24px; }
+  .code-output-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .code-output-header h3 { font-size: 16px; color: var(--primary); }
+  .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 10px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.7; overflow-x: auto; white-space: pre-wrap; word-break: break-all; position: relative; }
+  .copy-hint { text-align: center; font-size: 12px; color: var(--text-light); margin-top: 8px; }
+
+  /* Settings Card */
+  .settings-section { background: var(--white); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; }
+  .settings-section h3 { font-size: 17px; margin-bottom: 16px; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
+
+  /* Content Editor */
+  .editor-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .editor-tab { padding: 8px 18px; border: 2px solid #e0e0e0; background: transparent; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .2s; }
+  .editor-tab.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .editor-panel { display: none; background: var(--white); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); }
+  .editor-panel.active { display: block; animation: fadeIn .3s ease; }
+
+  .tag-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .tag-stock { background: #e8f5e9; color: #27ae60; }
+  .tag-premium { background: #fff3e0; color: #e67e22; }
+  .tag-hot { background: #ffebee; color: #dc3545; }
+
+  @media (max-width: 768px) {
+    .admin-body { flex-direction: column; }
+    .admin-sidebar { width: 100%; min-height: auto; position: static; height: auto; display: flex; overflow-x: auto; gap: 4px; padding: 10px; }
+    .admin-sidebar a { white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; padding: 8px 16px; }
+    .admin-sidebar a.active { border-left-color: transparent; border-bottom-color: var(--primary); }
+    .admin-main { padding: 16px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
 <body>
 
-<!-- Login Page -->
+<!-- ===== LOGIN ===== -->
 <div class="login-page" id="loginPage">
   <div class="login-box">
-    <h1>Qiandu Auto</h1>
-    <p class="subtitle">Admin Panel &mdash; Sign in to manage your site</p>
-    <input type="password" id="loginPass" placeholder="Enter admin password">
-    <button class="btn" onclick="handleLogin()">Sign In</button>
-    <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+    <h1>Q<span>ianduAuto</span></h1>
+    <p class="subtitle">Admin Panel — 登录管理你的网站</p>
+    <input type="password" id="loginPass" placeholder="输入管理员密码">
+    <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">登 录</button>
+    <p class="login-error" id="loginError">密码错误，请重试</p>
   </div>
 </div>
 
-<!-- Admin Dashboard -->
+<!-- ===== ADMIN DASHBOARD ===== -->
 <div class="admin-page" id="adminPage">
   <header class="admin-header">
-    <div class="logo"><span>Q</span> QianduAuto Admin</div>
+    <div class="logo">Q<span>iandu</span><span>Auto</span> 管理后台</div>
     <div class="user-info">
-      <span>Welcome, Admin</span>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <span>欢迎回来</span>
+      <button class="logout-btn" onclick="logout()">退出登录</button>
     </div>
   </header>
+
   <div class="admin-body">
+    <!-- Sidebar -->
     <nav class="admin-sidebar">
-      <a href="#" data-section="sec-dashboard" class="active" onclick="showSection('sec-dashboard')">&#9632; Dashboard</a>
-      <a href="#" data-section="sec-inquiries" onclick="showSection('sec-inquiries')">&#9993; Inquiries</a>
-      <a href="#" data-section="sec-vehicles" onclick="showSection('sec-vehicles')">&#128663; Vehicles</a>
-      <a href="#" data-section="sec-settings" onclick="showSection('sec-settings')">&#9881; Settings</a>
+      <a href="#" data-section="sec-dashboard" class="active" onclick="showSection('sec-dashboard')">📊 Dashboard</a>
+      <a href="#" data-section="sec-vehicles" onclick="showSection('sec-vehicles')">🚗 车辆管理</a>
+      <a href="#" data-section="sec-content" onclick="showSection('sec-content')">✏️ 主页内容</a>
+      <a href="#" data-section="sec-inquiries" onclick="showSection('sec-inquiries')">💬 客户询盘</a>
+      <a href="#" data-section="sec-settings" onclick="showSection('sec-settings')">⚙️ 设置</a>
     </nav>
+
+    <!-- Main Content -->
     <main class="admin-main">
 
-      <!-- Dashboard -->
+      <!-- ========== DASHBOARD ========== -->
       <div class="admin-section active" id="sec-dashboard">
-        <div class="section-header"><h2>Dashboard</h2></div>
+        <div class="section-header"><h2>📊 Dashboard</h2></div>
         <div class="stats-grid">
-          <div class="stat-card accent"><div class="number" id="statVehicles">0</div><div class="label">Vehicles Listed</div></div>
-          <div class="stat-card green"><div class="number" id="statInquiries">0</div><div class="label">Total Inquiries</div></div>
-          <div class="stat-card blue"><div class="number" id="statNew">0</div><div class="label">New Inquiries</div></div>
+          <div class="stat-card accent"><div class="number" id="statVehicles">0</div><div class="label">车辆数量</div></div>
+          <div class="stat-card green"><div class="number" id="statInquiries">0</div><div class="label">总询盘数</div></div>
+          <div class="stat-card blue"><div class="number" id="statNew">0</div><div class="label">新询盘</div></div>
         </div>
-        <p style="color:var(--text-light);font-size:13px;line-height:1.7">
-          Welcome to your admin panel. Inquiries from the frontend contact form will appear here when submitted.<br>
-          Use the <strong>Vehicles</strong> section to manage your car inventory, and <strong>Settings</strong> to change your password.
-        </p>
-      </div>
-
-      <!-- Inquiries -->
-      <div class="admin-section" id="sec-inquiries">
-        <div class="section-header"><h2>Customer Inquiries</h2></div>
-        <div class="data-table">
-          <table>
-            <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Message</th><th>Status</th><th>Action</th></tr></thead>
-            <tbody id="inquiryList"><tr><td colspan="6" style="text-align:center;color:var(--text-light);padding:32px">No inquiries yet</td></tr></tbody>
-          </table>
+        <div class="settings-section">
+          <h3>🚀 快速操作</h3>
+          <p style="color:var(--text-light);font-size:14px;margin-bottom:16px">
+            使用「车辆管理」添加/编辑车辆，然后复制生成的代码到 GitHub 的 <code>js/script.js</code> 即可更新首页。<br>
+            使用「主页内容」编辑公司介绍、服务描述等，复制代码到 <code>index.html</code>。
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="showSection('sec-vehicles')">🚗 管理车辆</button>
+            <button class="btn btn-accent" onclick="showSection('sec-content')">✏️ 编辑主页</button>
+          </div>
         </div>
       </div>
 
-      <!-- Vehicles -->
+      <!-- ========== VEHICLES ========== -->
       <div class="admin-section" id="sec-vehicles">
         <div class="section-header">
-          <h2>Vehicle Inventory</h2>
-          <button class="btn btn-primary" onclick="openAddVehicle()">+ Add Vehicle</button>
+          <h2>🚗 车辆库存管理</h2>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-success" onclick="generateVehicleCode()">📋 生成代码</button>
+            <button class="btn btn-primary" onclick="openAddVehicle()">+ 添加车辆</button>
+          </div>
         </div>
-        <div class="data-table">
+
+        <!-- Vehicle Table -->
+        <div class="data-table" style="margin-bottom:20px">
           <table>
-            <thead><tr><th>Year</th><th>Make / Model</th><th>Mileage</th><th>Engine</th><th>Price</th><th>Action</th></tr></thead>
-            <tbody id="vehicleList"><tr><td colspan="6" style="text-align:center;color:var(--text-light);padding:32px">No vehicles yet</tr></tbody>
+            <thead><tr><th>车型</th><th>年份</th><th>里程</th><th>发动机</th><th>价格(FOB)</th><th>标签</th><th>操作</th></tr></thead>
+            <tbody id="vehicleList"></tbody>
           </table>
         </div>
-        <div style="margin-top:16px">
-          <button class="btn btn-outline" onclick="addSampleData()">Add Sample Vehicles</button>
-          <span style="font-size:12px;color:var(--text-light);margin-left:12px">Note: These are stored locally. To update the public site, edit js/script.js</span>
+
+        <!-- Generated Code -->
+        <div class="code-output" id="vehicleCodeOutput" style="display:none">
+          <div class="code-output-header">
+            <h3>📋 复制以下代码 → 替换 script.js 中的 inventory 数组</h3>
+            <button class="btn btn-sm btn-success" onclick="copyCode('vehicleCodeBox')">📑 复制代码</button>
+          </div>
+          <div class="code-box" id="vehicleCodeBox"></div>
+          <p class="copy-hint">打开 GitHub → qianducar/Repository → js/script.js → 找到 const inventory = [...] → 全部替换 → Commit changes</p>
         </div>
       </div>
 
-      <!-- Settings -->
-      <div class="admin-section" id="sec-settings">
-        <div class="section-header"><h2>Settings</h2></div>
-        <div class="settings-section">
-          <h3>Change Password</h3>
-          <div class="form-group">
-            <label>New Password</label>
-            <input type="password" id="newPass" placeholder="Enter new password">
+      <!-- ========== CONTENT EDITOR ========== -->
+      <div class="admin-section" id="sec-content">
+        <div class="section-header">
+          <h2>✏️ 主页内容编辑</h2>
+          <button class="btn btn-success" onclick="generateContentCode()">📋 生成代码</button>
+        </div>
+
+        <div class="editor-tabs">
+          <button class="editor-tab active" onclick="switchEditorTab('tab-hero',this)">🎯 Hero 标题</button>
+          <button class="editor-tab" onclick="switchEditorTab('tab-about',this)">🏢 关于我们</button>
+          <button class="editor-tab" onclick="switchEditorTab('tab-services',this)">🛠 服务项目</button>
+          <button class="editor-tab" onclick="switchEditorTab('tab-steps',this)">📋 流程步骤</button>
+          <button class="editor-tab" onclick="switchEditorTab('tab-contact',this)">📞 联系信息</button>
+        </div>
+
+        <!-- Hero Tab -->
+        <div class="editor-panel active" id="tab-hero">
+          <h3 style="margin-bottom:16px;color:var(--primary)">🎯 Hero 区域（首页大标题）</h3>
+          <div class="form-group"><label>中文标题</label><input id="heroZh" value="Premium Used Cars from China" placeholder="中文标题"></div>
+          <div class="form-group"><label>英文标题</label><input id="heroEn" value="Premium Used Cars from China" placeholder="English Title"></div>
+          <div class="form-group"><label>俄文标题</label><input id="heroRu" value="Подержанные автомобили премиум-класса из Китая" placeholder="Заголовок RU"></div>
+          <div class="form-group"><label>中文副标题</label><textarea id="subZh" placeholder="中文副标题">专业二手车出口 · 发往全球 · FOB/CIF 可选</textarea></div>
+          <div class="form-group"><label>英文副标题</label><textarea id="subEn" placeholder="English Subtitle">Professional Vehicle Export · Worldwide Shipping · FOB/CIF Available</textarea></div>
+          <div class="form-group"><label>俄文副标题</label><textarea id="subRu" placeholder="Подзаголовок RU">Профессиональный экспорт подержанных автомобилей · Доставка по миру · FOB/CIF</textarea></div>
+        </div>
+
+        <!-- About Tab -->
+        <div class="editor-panel" id="tab-about">
+          <h3 style="margin-bottom:16px;color:var(--primary)">🏢 关于我们</h3>
+          <div class="form-group"><label>中文介绍</label><textarea id="aboutZh" style="min-height:120px">Qiandu Auto 专注于中国优质二手车的出口业务。我们拥有丰富的行业经验，为全球客户提供高性价比的车辆采购、整备、出口一站式服务。</textarea></div>
+          <div class="form-group"><label>英文介绍</label><textarea id="aboutEn" style="min-height:120px">Qiandu Auto specializes in exporting quality used vehicles from China. With extensive industry experience, we provide global clients with cost-effective vehicle sourcing, preparation, and export services.</textarea></div>
+          <div class="form-group"><label>俄文介绍</label><textarea id="aboutRu" style="min-height:120px">Qiandu Auto специализируется на экспорте качественных подержанных автомобилей из Китая. Мы предоставляем клиентам по всему миру услуги по закупке, подготовке и экспорту автомобилей.</textarea></div>
+        </div>
+
+        <!-- Services Tab -->
+        <div class="editor-panel" id="tab-services">
+          <h3 style="margin-bottom:16px;color:var(--primary)">🛠 服务项目（6项）</h3>
+          <div id="servicesEditor"></div>
+        </div>
+
+        <!-- Steps Tab -->
+        <div class="editor-panel" id="tab-steps">
+          <h3 style="margin-bottom:16px;color:var(--primary)">📋 流程步骤（4步）</h3>
+          <div id="stepsEditor"></div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div class="editor-panel" id="tab-contact">
+          <h3 style="margin-bottom:16px;color:var(--primary)">📞 联系信息</h3>
+          <div class="form-group"><label>电话号码</label><input id="contactPhone" value="+86 159 9692 4305 / +86 156 6489 6209"></div>
+          <div class="form-group"><label>邮箱</label><input id="contactEmail" value="hello@qianduauto.me"></div>
+          <div class="form-group"><label>地址（中文）</label><input id="contactAddrZh" value="中国 · 徐州"></div>
+          <div class="form-group"><label>地址（英文）</label><input id="contactAddrEn" value="Xuzhou, China"></div>
+          <div class="form-group"><label>地址（俄文）</label><input id="contactAddrRu" value="Сюйчжоу, Китай"></div>
+        </div>
+
+        <!-- Content Code Output -->
+        <div class="code-output" id="contentCodeOutput" style="display:none;margin-top:24px">
+          <div class="code-output-header">
+            <h3>📋 生成的代码（根据修改的内容显示对应部分）</h3>
+            <button class="btn btn-sm btn-success" onclick="copyCode('contentCodeBox')">📑 复制代码</button>
           </div>
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" id="confirmPass" placeholder="Confirm new password">
-          </div>
-          <button class="btn btn-primary" onclick="savePassword()">Update Password</button>
+          <div class="code-box" id="contentCodeBox"></div>
+          <p class="copy-hint">根据代码注释找到 index.html 对应位置替换即可</p>
         </div>
       </div>
+
+      <!-- ========== INQUIRIES ========== -->
+      <div class="admin-section" id="sec-inquiries">
+        <div class="section-header"><h2>💬 客户询盘</h2></div>
+        <div class="data-table">
+          <table>
+            <thead><tr><th>姓名</th><th>邮箱</th><th>国家</th><th>留言</th><th>时间</th><th>状态</th><th>操作</th></tr></thead>
+            <tbody id="inquiryList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========== SETTINGS ========== -->
+      <div class="admin-section" id="sec-settings">
+        <div class="section-header"><h2>⚙️ 设置</h2></div>
+        <div class="settings-section">
+          <h3>修改密码</h3>
+          <div class="form-group"><label>新密码</label><input type="password" id="newPass" placeholder="输入新密码"></div>
+          <div class="form-group"><label>确认密码</label><input type="password" id="confirmPass" placeholder="再次输入新密码"></div>
+          <button class="btn btn-primary" onclick="savePassword()">更新密码</button>
+        </div>
+        <div class="settings-section">
+          <h3>🗑 数据管理</h3>
+          <p style="color:var(--text-light);font-size:13px;margin-bottom:12px">清除本地存储的所有数据（不影响线上网站）</p>
+          <button class="btn btn-danger" onclick="if(confirm('确定清除所有数据？')){localStorage.clear();location.reload();}">清除所有数据</button>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
 
-<!-- Vehicle Modal -->
+<!-- ===== VEHICLE MODAL ===== -->
 <div class="modal" id="vehicleModal">
   <div class="modal-content">
-    <h3 id="vehicleFormTitle">Add Vehicle</h3>
+    <h3 id="vehicleFormTitle">添加车辆</h3>
     <input type="hidden" id="vehicleIdx">
     <div class="form-grid">
-      <div class="form-group"><label>Make / Model *</label><input id="vMake" placeholder="e.g. Toyota Camry"></div>
-      <div class="form-group"><label>Year</label><input id="vYear" placeholder="e.g. 2021"></div>
-      <div class="form-group"><label>Mileage</label><input id="vMileage" placeholder="e.g. 45,000 km"></div>
-      <div class="form-group"><label>Engine</label><input id="vEngine" placeholder="e.g. 2.5L"></div>
-      <div class="form-group"><label>Price (FOB)</label><input id="vPrice" placeholder="e.g. $15,800"></div>
-      <div class="form-group"><label>Tag</label><input id="vTag" placeholder="e.g. In Stock, Premium"></div>
+      <div class="form-group"><label>车型 *</label><input id="vMake" placeholder="例：Toyota Camry"></div>
+      <div class="form-group"><label>年份</label><input id="vYear" placeholder="例：2021"></div>
+      <div class="form-group"><label>里程</label><input id="vMileage" placeholder="例：45,000 km"></div>
+      <div class="form-group"><label>发动机</label><input id="vEngine" placeholder="例：2.5L"></div>
+      <div class="form-group"><label>价格 (FOB)</label><input id="vPrice" placeholder="例：$15,800"></div>
+      <div class="form-group"><label>标签</label>
+        <select id="vTag">
+          <option value="In Stock">In Stock（在库）</option>
+          <option value="Premium">Premium（精品）</option>
+          <option value="Best Seller">Best Seller（热销）</option>
+          <option value="Coming Soon">Coming Soon（即将到库）</option>
+        </select>
+      </div>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeModal('vehicleModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveVehicle()">Save Vehicle</button>
+      <button class="btn btn-outline" onclick="closeModal('vehicleModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveVehicle()">保存</button>
     </div>
   </div>
 </div>
 
-<script src="js/script.js"></script>
+<script>
+// ====== AUTH ======
+const DEFAULT_PASS = 'qiandu2026';
+let adminPass = localStorage.getItem('qa_admin_pass') || DEFAULT_PASS;
+
+function handleLogin() {
+  const input = document.getElementById('loginPass').value;
+  if (input === adminPass) {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminPage').style.display = 'block';
+    loadData();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  document.getElementById('adminPage').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('loginPass').value = '';
+}
+
+// Enter key login
+document.getElementById('loginPass')?.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
+
+// ====== NAVIGATION ======
+function showSection(id) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-sidebar a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`[data-section="${id}"]`)?.classList.add('active');
+}
+
+function switchEditorTab(id, btn) {
+  document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ====== DATA ======
+function getVehicles() { return JSON.parse(localStorage.getItem('qa_vehicles') || '[]'); }
+function saveVehicles(data) { localStorage.setItem('qa_vehicles', JSON.stringify(data)); }
+function getInquiries() { return JSON.parse(localStorage.getItem('qa_inquiries') || '[]'); }
+
+function loadData() {
+  renderVehicles();
+  renderInquiries();
+  updateStats();
+  initContentEditor();
+}
+
+function updateStats() {
+  const v = getVehicles();
+  const iq = getInquiries();
+  document.getElementById('statVehicles').textContent = v.length;
+  document.getElementById('statInquiries').textContent = iq.length;
+  document.getElementById('statNew').textContent = iq.filter(i=>i.status==='new').length;
+}
+
+// ====== VEHICLES ======
+function renderVehicles() {
+  const list = getVehicles();
+  const tbody = document.getElementById('vehicleList');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:32px">暂无车辆，点击右上角添加</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map((car, i) => `
+    <tr>
+      <td><strong>${car.make}</strong></td>
+      <td>${car.year}</td>
+      <td>${car.mileage}</td>
+      <td>${car.engine}</td>
+      <td><strong style="color:var(--primary)">${car.price}</strong></td>
+      <td><span class="tag-badge ${car.tag==='In Stock'?'tag-stock':car.tag==='Premium'?'tag-premium':'tag-hot'}">${car.tag}</span></td>
+      <td>
+        <button class="btn btn-sm btn-outline" onclick="editVehicle(${i})">编辑</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteVehicle(${i})">删除</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openAddVehicle() {
+  document.getElementById('vehicleFormTitle').textContent = '添加车辆';
+  document.getElementById('vehicleIdx').value = '';
+  document.getElementById('vMake').value = '';
+  document.getElementById('vYear').value = '';
+  document.getElementById('vMileage').value = '';
+  document.getElementById('vEngine').value = '';
+  document.getElementById('vPrice').value = '';
+  document.getElementById('vTag').value = 'In Stock';
+  showModal('vehicleModal');
+}
+
+function editVehicle(idx) {
+  const car = getVehicles()[idx];
+  document.getElementById('vehicleFormTitle').textContent = '编辑车辆';
+  document.getElementById('vehicleIdx').value = idx;
+  document.getElementById('vMake').value = car.make;
+  document.getElementById('vYear').value = car.year;
+  document.getElementById('vMileage').value = car.mileage;
+  document.getElementById('vEngine').value = car.engine;
+  document.getElementById('vPrice').value = car.price;
+  document.getElementById('vTag').value = car.tag;
+  showModal('vehicleModal');
+}
+
+function saveVehicle() {
+  const make = document.getElementById('vMake').value.trim();
+  if (!make) { alert('请填写车型'); return; }
+  const car = {
+    make, year: document.getElementById('vYear').value,
+    mileage: document.getElementById('vMileage').value,
+    engine: document.getElementById('vEngine').value,
+    price: document.getElementById('vPrice').value,
+    tag: document.getElementById('vTag').value,
+    image: make.toLowerCase().replace(/\s+/g,'-')
+  };
+  const list = getVehicles();
+  const idx = document.getElementById('vehicleIdx').value;
+  if (idx !== '') { list[parseInt(idx)] = car; } else { list.push(car); }
+  saveVehicles(list);
+  renderVehicles(); updateStats();
+  closeModal('vehicleModal');
+  // Auto generate code
+  generateVehicleCode();
+}
+
+function deleteVehicle(idx) {
+  if(!confirm('确定删除这辆车？')) return;
+  const list = getVehicles();
+  list.splice(idx, 1);
+  saveVehicles(list);
+  renderVehicles(); updateStats();
+}
+
+function generateVehicleCode() {
+  const list = getVehicles();
+  if (!list.length) { alert('请先添加车辆'); return; }
+  
+  let code = `// 车辆数据 — 由管理后台生成\nconst inventory = [\n`;
+  list.forEach((car, i) => {
+    code += `  { make: "${car.make}", year: ${car.year}, mileage: "${car.mileage}", engine: "${car.engine}", price: "${car.price}", tag: "${car.tag}", image: "${car.image}" }`;
+    code += i < list.length - 1 ? ',\n' : '\n';
+  });
+  code += `];`;
+
+  document.getElementById('vehicleCodeBox').textContent = code;
+  document.getElementById('vehicleCodeOutput').style.display = 'block';
+  document.getElementById('vehicleCodeOutput').scrollIntoView({behavior:'smooth'});
+}
+
+// ====== INQUIRIES ======
+function renderInquiries() {
+  const list = getInquiries();
+  const tbody = document.getElementById('inquiryList');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:32px">暂无询盘记录</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map((q, i) => `
+    <tr>
+      <td><strong>${q.name}</strong></td>
+      <td>${q.email}</td>
+      <td>${q.country||'-'}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${q.message}</td>
+      <td style="font-size:12px;color:#999">${q.time||'-'}</td>
+      <td><span class="tag-badge ${q.status==='new'?'tag-hot':'tag-stock'}">${q.status==='new'?'新':'已读'}</span></td>
+      <td><button class="btn btn-sm btn-outline" onclick="markRead(${i})">标已读</button> <button class="btn btn-sm btn-danger" onclick="deleteInquiry(${i})">删除</button></td>
+    </tr>
+  `).join('');
+}
+
+function markRead(i) { const q=getInquiries(); q[i].status='read'; localStorage.setItem('qa_inquiries',JSON.stringify(q)); renderInquiries(); updateStats(); }
+function deleteInquiry(i) { if(!confirm('确定删除？'))return; const q=getInquiries(); q.splice(i,1); localStorage.setItem('qa_inquiries',JSON.stringify(q)); renderInquiries(); updateStats(); }
+
+// ====== SETTINGS ======
+function savePassword() {
+  const np = document.getElementById('newPass').value;
+  const cp = document.getElementById('confirmPass').value;
+  if (!np || np !== cp) { alert('两次密码不一致'); return; }
+  if (np.length < 4) { alert('密码至少4位'); return; }
+  adminPass = np;
+  localStorage.setItem('qa_admin_pass', np);
+  document.getElementById('newPass').value = '';
+  document.getElementById('confirmPass').value = '';
+  alert('密码已更新！');
+}
+
+// ====== MODAL ======
+function showModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+document.getElementById('vehicleModal')?.addEventListener('click', e => { if(e.target.id==='vehicleModal') closeModal('vehicleModal'); });
+
+// ====== COPY ======
+function copyCode(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = event.target;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ 已复制！';
+    btn.style.background = '#27ae60';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+  });
+}
+
+// ====== CONTENT EDITOR ======
+function initContentEditor() {
+  // Services
+  const svcData = [
+    { zh: '车辆采购', en: 'Vehicle Sourcing', ru: 'Закупка автомобилей', descZh: '从全国范围筛选优质车源，严格把控车况品质', descEn: 'Source quality vehicles nationwide with strict condition control', descRu: 'Отбор качественных автомобилей по всей стране' },
+    { zh: '专业整备', en: 'Reconditioning', ru: 'Реставрация', descZh: '180点全面检测，机械美容翻新，确保完美交付', descEn: '180-point inspection, mechanical & cosmetic reconditioning', descRu: '180-точечная инспекция, механическая и косметическая реставрация' },
+    { zh: '出口手续', en: 'Export Documentation', ru: 'Экспортная документация', descZh: '全套单证办理，商检报关一站式完成', descEn: 'Full documentation, inspection & customs clearance', descRu: 'Полный пакет документов, инспекция и таможенное оформление' },
+    { zh: '国际物流', en: 'International Logistics', ru: 'Международная логистика', descZh: '海运/铁路/公路多式联运，门到港/门到门服务', descEn: 'Sea/Rail/Truck multimodal transport, port-to-door service', descRu: 'Мультимодальные перевозки морем/поездом/грузовиком' },
+    { zh: '质量保障', en: 'Quality Assurance', ru: 'Гарантия качества', descZh: 'FOB/CIF灵活选择，全程保险覆盖', descEn: 'Flexible FOB/CIF terms, full insurance coverage', descRu: 'Гибкие условия FOB/CIF, полное страховое покрытие' },
+    { zh: '售后支持', en: 'After-Sales Support', ru: 'Послепродажное обслуживание', descZh: '清关指导，配件供应，技术支持', descEn: 'Clearance guidance, spare parts supply, tech support', descRu: 'Руководство по таможне, поставка запчастей, техподдержка' },
+  ];
+  const svcContainer = document.getElementById('servicesEditor');
+  svcContainer.innerHTML = svcData.map((s, i) => `
+    <div style="background:#f8f9fa;padding:16px;border-radius:10px;margin-bottom:12px">
+      <strong style="color:var(--primary)">服务 ${i+1}</strong>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="form-group"><label>中文名称</label><input id="svc${i}_zh" value="${s.zh}"></div>
+        <div class="form-group"><label>英文名称</label><input id="svc${i}_en" value="${s.en}"></div>
+        <div class="form-group"><label>俄文名称</label><input id="svc${i}_ru" value="${s.ru}"></div>
+      </div>
+      <div class="form-group" style="margin-top:8px"><label>中文描述</label><textarea id="svcdesc${i}_zh" style="min-height:50px">${s.descZh}</textarea></div>
+      <div class="form-grid">
+        <div class="form-group"><label>英文描述</label><textarea id="svcdesc${i}_en" style="min-height:50px">${s.descEn}</textarea></div>
+        <div class="form-group"><label>俄文描述</label><textarea id="svcdesc${i}_ru" style="min-height:50px">${s.descRu}</textarea></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Steps
+  const stepData = [
+    { zh: '选择车辆', en: 'Select Vehicles', ru: 'Выбор автомобиля', descZh: '浏览我们的在线库存或告诉我们您的需求，我们会为您找到最合适的车辆', descEn: 'Browse our online inventory or tell us your requirements and we\'ll find the perfect match', descRu: 'Просмотрите наш онлайн-инвентарь или сообщите нам о ваших требованиях' },
+    { zh: '确认订单', en: 'Confirm Order', ru: 'Подтверждение заказа', descZh: '确认车型、配置和价格，签订外贸合同，支付定金', descEn: 'Confirm model, specs & price. Sign contract & pay deposit', descRu: 'Подтвердите модель, характеристики и цену. Подпишите контракт и внесите предоплату' },
+    { zh: '装运出港', en: 'Shipping', ru: 'Отгрузка', descZh: '车辆整备完毕后安排国际运输，提供全程物流跟踪', descEn: 'Vehicle prepared & shipped with full tracking to destination port', descRu: 'Автомобиль подготовлен и отправлен с полным отслеживанием до порта назначения' },
+    { zh: '清关交付', en: 'Delivery', ru: 'Доставка', descZh: '协助目的国清关手续，车辆安全交付到您手中', descEn: 'Assist with destination customs clearance for safe delivery', descRu: 'Помощь с таможенным оформлением в стране назначения для безопасной доставки' },
+  ];
+  const stepContainer = document.getElementById('stepsEditor');
+  stepContainer.innerHTML = stepData.map((s, i) => `
+    <div style="background:#f8f9fa;padding:16px;border-radius:10px;margin-bottom:12px">
+      <strong style="color:var(--primary)">步骤 ${i+1}</strong>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="form-group"><label>中文名称</label><input id="step${i}_zh" value="${s.zh}"></div>
+        <div class="form-group"><label>英文名称</label><input id="step${i}_en" value="${s.en}"></div>
+        <div class="form-group"><label>俄文名称</label><input id="step${i}_ru" value="${s.ru}"></div>
+      </div>
+      <div class="form-group" style="margin-top:8px"><label>中文描述</label><textarea id="stepdesc${i}_zh">${s.descZh}</textarea></div>
+      <div class="form-grid">
+        <div class="form-group"><label>英文描述</label><textarea id="stepdesc${i}_en">${s.descEn}</textarea></div>
+        <div class="form-group"><label>俄文描述</label><textarea id="stepdesc${i}_ru">${s.descRu}</textarea></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function generateContentCode() {
+  let output = '<!-- ======= 主页内容代码（由管理后台生成）======= -->\n\n';
+
+  // Hero
+  output += `<!-- ===== 1. HERO 标题（三语）=====\n`;
+  output += `在 js/script.js 的 translations 对象中找到 "hero-title"，替换为：\n\n`;
+  output += `"hero-title": {\n`;
+  output += `  "zh": "${document.getElementById('heroZh').value}",\n`;
+  output += `  "en": "${document.getElementById('heroEn').value}",\n`;
+  output += `  "ru": "${document.getElementById('heroRu').value}"\n`;
+  output += `}\n\n`;
+
+  // Contact
+  output += `\n<!-- ===== 2. 联系信息（index.html 第199行附近）=====\n`;
+  output += `找到电话那行，替换为：\n\n`;
+  output += `<span>${document.getElementById('contactPhone').value}</span>\n\n`;
+
+  document.getElementById('contentCodeBox').textContent = output;
+  document.getElementById('contentCodeOutput').style.display = 'block';
+  document.getElementById('contentCodeOutput').scrollIntoView({behavior:'smooth'});
+}
+</script>
+
 </body>
 </html>
