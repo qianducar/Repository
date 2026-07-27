@@ -1,100 +1,723 @@
-Q
-QianduAuto
-Home
-Inventory
-Services
-About
-Get a Quote
-📋 出口流程 & 避坑指南
-二手车出口全流程 · 中亚俄语区实操避坑 · 专业级指南
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>出口流程 & 避坑指南 | Qiandu Auto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2d5a87;
+    --accent: #e8a838;
+    --danger: #dc3545;
+    --danger-bg: #fff5f5;
+    --danger-border: #ffcdd2;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --bg: #ffffff;
+    --bg-light: #f4f6f9;
+    --card-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    --card-hover: 0 8px 30px rgba(0,0,0,0.12);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
 
-🇨🇳 中文
-🇺🇸 English
-🇷🇺 Русский
-🚀 汽车出口标准流程
-01
-签约
-🤝
-商务洽谈 & 签约
-客户询盘 → 报价核算 → 签订外贸合同/PI，明确贸易术语（FOB/CIF）、付款方式
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-light); color: var(--text); line-height: 1.6; }
 
-推荐：30%定金 + 70%见提单付款
-02
-备货
-🔍
-采购 & 质检
-车辆采购到位，完成180点全面质检，拍摄实拍照片和视频，制作装箱清单
+  /* ===== NAV ===== */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 18px; }
+  .logo-accent { color: var(--accent); }
+  .nav-links { display: flex; list-style: none; gap: 28px; }
+  .nav-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta { background: var(--primary) !important; color: #fff !important; padding: 8px 20px; border-radius: 8px; }
 
-每台车独立检测报告
-03
-单证
-📄
-全套贸易单证
-商业发票 · 装箱单 · 车辆合格证 · 商检报告 · 原产地证
-俄语国家必须配俄文翻译件
+  /* ===== HERO ===== */
+  .hero { padding: 130px 24px 60px; text-align: center; background: linear-gradient(135deg, #1a3a5c 0%, #2d5a87 50%, #1a3a5c 100%); color: #fff; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 50%, rgba(232,168,56,0.15) 0%, transparent 50%); pointer-events: none; }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 12px; position: relative; }
+  .hero p { font-size: 1.05rem; opacity: 0.85; max-width: 600px; margin: 0 auto 30px; position: relative; }
 
-单证一致性 = 清关顺利
-04
-物流
-🚢
-国际物流订舱
-海运 / 中欧班列 / 公路汽运 → 拖车至口岸仓库 → 购买货运保险
+  /* Lang Tabs */
+  .lang-bar { display: flex; justify-content: center; gap: 8px; position: relative; z-index: 1; }
+  .lang-tab { padding: 10px 28px; border: 2px solid rgba(255,255,255,0.25); border-radius: 50px; background: transparent; color: #fff; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .25s; font-family: inherit; }
+  .lang-tab.active { background: #fff; color: var(--primary); border-color: #fff; }
+  .lang-tab:hover:not(.active) { border-color: rgba(255,255,255,0.6); }
 
-中亚首选：公路汽运 / 班列
-05
-报关
-🏛️
-海关出口申报
-提交全套单证向中国海关申报，配合查验，审核通过后放行
+  /* ===== MAIN CONTENT ===== */
+  .main { max-width: 1100px; margin: 0 auto; padding: 50px 24px 80px; }
 
-06
-出运
-📦
-装货出运
-车辆装车/装船，获取提单(B/L)，寄送全套单证给客户用于目的国清关
+  /* Section Title */
+  .section-title { text-align: center; margin-bottom: 40px; }
+  .section-title h2 { font-size: 1.7rem; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+  .section-title p { color: var(--text-light); font-size: 1rem; }
+  .section-title .underline { width: 50px; height: 4px; background: var(--accent); border-radius: 2px; margin: 14px auto 0; }
 
-07
-收汇
-💰
-外汇收款 & 结汇
-客户付款至企业对公外汇账户，银行完成收汇结汇
+  /* ===== PROCESS FLOW ===== */
+  .process-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 60px; }
+  
+  .step-row { display: grid; grid-template-columns: auto 1fr; gap: 0; align-items: stretch; }
+  
+  .step-num { width: 64px; min-height: 90px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius) 0 0 var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; position: relative; }
+  .step-num .num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+  .step-num .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; }
+  .step-num::after { content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); border: 10px solid transparent; border-top-color: var(--primary-light); }
+  
+  .step-card { background: #fff; border-radius: 0 var(--radius) var(--radius) 0; padding: 22px 28px; box-shadow: var(--card-shadow); display: flex; gap: 18px; align-items: flex-start; transition: box-shadow .25s, transform .25s; position: relative; }
+  .step-card:hover { box-shadow: var(--card-hover); transform: translateY(-2px); }
+  
+  .step-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .step-icon.blue { background: #e8f0fe; }
+  .step-icon.green { background: #e8f5e9; }
+  .step-icon.orange { background: #fff3e0; }
+  .step-icon.purple { background: #f3e5f5; }
+  .step-icon.red { background: #ffebee; }
+  .step-icon.teal { background: #e0f2f1; }
+  
+  .step-content h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+  .step-content p { font-size: 0.9rem; color: var(--text-light); line-height: 1.65; }
+  .step-content .tag { display: inline-block; background: var(--primary); color: #fff; font-size: 0.7rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; margin-top: 8px; }
 
-08
-退税
-🧾
-出口退税
-整理报关单+进项发票+收汇凭证，向税务局申报退税，回笼资金降低成本
+  .step-connector { height: 24px; margin-left: 32px; display: flex; align-items: center; justify-content: center; }
+  .step-connector .line { width: 2px; height: 100%; background: linear-gradient(to bottom, var(--primary-light), var(--accent)); border-radius: 1px; position: relative; }
+  .step-connector .arrow { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--accent); }
 
-🚨 中亚/俄语区出口 — 必踩坑预警（红线）
-单证必须一字不差 — 发票、箱单、产地证的品名、VIN码、货值必须完全一致，否则扣货+罚款
-必须有俄文翻译 — 出口哈萨克斯坦、乌兹别克斯坦、吉尔吉斯斯坦，所有文件必须附俄文译本
-车辆认证缺一不可 — 合格证、商检报告、环保认证，缺任何一项直接扣车无法清关
-严禁低报货值 — 虚假申报 = 没收货物 + 巨额罚款 + 海关信用永久降级
-⛔ 高频踩坑指南
-📝
-合同 & 付款坑
-口头合同无效 — 必须签书面合同/PI，明确违约条款和赔付标准
-拒绝全额后付 — 海外客户拒收=巨额损失，坚持先收定金再发货
-FOB/CIF/DAP 要写清 — 谁承担运费、保险、清关费？模糊=额外掏钱
-锁定汇率波动 — 大额订单必须约定汇率责任方，防止汇损吃掉利润
-🚛
-物流运输坑
-低价货代是陷阱 — 报价低≠总成本低，隐藏滞箱费、换柜费、边境加急费
-每票必买货运保险 — 不买=车辆破损丢失无法理赔，省小钱亏大钱
-边境延误写进合同 — 中欧班列/公路常拥堵，无延误条款=被动等待
-车辆必须加固包装 — 裸装过境必损坏，返修成本远超包装费
-🏛️
-报关 & 税务坑
-禁止买单报关 — 借他人抬头出口属违法，法人承担刑事责任
-发票品名要对上 — 进项发票与报关单品名不一致→退税直接驳回
-走公账收外汇 — 私户收款触发外汇局风控，资金冻结且无法退税
-🌍
-海外清关坑
-提前查准入标准 — 目的国环保认证、进口许可缺一不可，到港才发现=销毁或退运
-代理必须查资质 — 无资质个人代理可能卷款失联，货钱两空
-尊重知识产权 — 仿牌/无授权产品被海关直接销毁并处重罚
-准备好出口了？
-告诉我们您的需求，我们提供从采购到清关的一站式服务
+  @media (max-width: 700px) {
+    .step-row { grid-template-columns: 1fr; }
+    .step-num { width: 100%; min-height: auto; flex-direction: row; gap: 12px; padding: 12px 20px; border-radius: var(--radius) var(--radius) 0 0; }
+    .step-num::after { display: none; }
+    .step-card { border-radius: 0 0 var(--radius) var(--radius); }
+  }
 
-立即咨询 →
-© 2026 Qiandu Auto. All rights reserved.
+  /* ===== WARNING BANNER ===== */
+  .warning-banner { background: linear-gradient(135deg, #dc3545, #c0392b); color: #fff; border-radius: var(--radius); padding: 32px 36px; margin-bottom: 50px; position: relative; overflow: hidden; }
+  .warning-banner::before { content: '⚠'; position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 80px; opacity: 0.15; }
+  .warning-banner h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .warning-banner ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; }
+  .warning-banner li { padding: 6px 0 6px 24px; position: relative; font-size: 0.92rem; line-height: 1.55; }
+  .warning-banner li::before { content: '✗'; position: absolute; left: 0; font-weight: 900; font-size: 14px; }
+  @media (max-width: 700px) { .warning-banner ul { grid-template-columns: 1fr; } }
+
+  /* ===== PITFALL CARDS ===== */
+  .pitfall-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-bottom: 50px; }
+  
+  .pitfall-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--card-shadow); transition: all .25s; border-left: 4px solid var(--danger); }
+  .pitfall-card:hover { box-shadow: var(--card-hover); transform: translateY(-3px); }
+  
+  .pitfall-header { padding: 18px 22px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f0f0f0; }
+  .pitfall-header .icon { width: 44px; height: 44px; border-radius: 12px; background: var(--danger-bg); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .pitfall-header h3 { font-size: 1rem; font-weight: 700; color: var(--danger); }
+  
+  .pitfall-body { padding: 14px 22px 20px; }
+  .pitfall-body ul { list-style: none; padding: 0; }
+  .pitfall-body li { padding: 10px 0 10px 28px; position: relative; font-size: 0.88rem; color: var(--text-light); line-height: 1.6; border-bottom: 1px dashed #eee; }
+  .pitfall-body li:last-child { border-bottom: none; }
+  .pitfall-body li::before { content: '⛔'; position: absolute; left: 0; font-size: 14px; top: 11px; }
+  .pitfall-body li strong { color: var(--danger); }
+
+  /* ===== TIP CARD (green) ===== */
+  .tip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-bottom: 50px; }
+  .tip-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--card-shadow); transition: all .25s; border-left: 4px solid #27ae60; }
+  .tip-card:hover { box-shadow: var(--card-hover); transform: translateY(-3px); }
+  .tip-card .pitfall-header { border-bottom-color: #f0f0f0; }
+  .tip-card .pitfall-header .icon { background: #e8f8ee; }
+  .tip-card .pitfall-header h3 { color: #27ae60; }
+  .tip-card .pitfall-body li::before { content: '✅'; }
+
+  /* ===== HIDDEN SECTIONS ===== */
+  .guide-section { display: none; }
+  .guide-section.active { display: block; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== CTA ===== */
+  .cta-box { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; border-radius: var(--radius); padding: 40px; text-align: center; margin-top: 50px; }
+  .cta-box h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  .cta-box p { opacity: 0.85; margin-bottom: 22px; }
+  .cta-box a { display: inline-block; background: var(--accent); color: var(--primary); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform .2s, box-shadow .2s; }
+  .cta-box a:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,168,56,0.4); }
+
+  /* ===== FOOTER ===== */
+  .footer-mini { text-align: center; padding: 30px 24px; color: #999; font-size: 0.85rem; border-top: 1px solid #eee; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><span class="logo-icon">Q</span><span class="logo-text">Qiandu<span class="logo-accent">Auto</span></span></a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#inventory">Inventory</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 id="gTitle">📋 出口流程 & 避坑指南</h1>
+  <p id="gSub">二手车出口全流程 · 中亚俄语区实操避坑 · 专业级指南</p>
+  <div class="lang-bar">
+    <button class="lang-tab active" onclick="switchGuide('zh')">🇨🇳 中文</button>
+    <button class="lang-tab" onclick="switchGuide('en')">🇺🇸 English</button>
+    <button class="lang-tab" onclick="switchGuide('ru')">🇷🇺 Русский</button>
+  </div>
+</section>
+
+<div class="main">
+
+<!-- ======================== 中文版 ======================== -->
+<div class="guide-section active" id="guide-zh">
+
+  <!-- 流程 -->
+  <div class="section-title"><h2 id="zh-procTitle">🚀 汽车出口标准流程</h2><div class="underline"></div></div>
+  
+  <div class="process-flow">
+    
+    <div class="step-row">
+      <div class="step-num"><span class="num">01</span><span class="label">签约</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">🤝</div>
+        <div class="step-content">
+          <h3>商务洽谈 & 签约</h3>
+          <p>客户询盘 → 报价核算 → 签订外贸合同/PI，明确贸易术语（FOB/CIF）、付款方式</p>
+          <span class="tag">推荐：30%定金 + 70%见提单付款</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">02</span><span class="label">备货</span></div>
+      <div class="step-card">
+        <div class="step-icon green">🔍</div>
+        <div class="step-content">
+          <h3>采购 & 质检</h3>
+          <p>车辆采购到位，完成180点全面质检，拍摄实拍照片和视频，制作装箱清单</p>
+          <span class="tag">每台车独立检测报告</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">03</span><span class="label">单证</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">📄</div>
+        <div class="step-content">
+          <h3>全套贸易单证</h3>
+          <p>商业发票 · 装箱单 · 车辆合格证 · 商检报告 · 原产地证<br><strong style="color:#dc3545;">俄语国家必须配俄文翻译件</strong></p>
+          <span class="tag">单证一致性 = 清关顺利</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">04</span><span class="label">物流</span></div>
+      <div class="step-card">
+        <div class="step-icon purple">🚢</div>
+        <div class="step-content">
+          <h3>国际物流订舱</h3>
+          <p>海运 / 中欧班列 / 公路汽运 → 拖车至口岸仓库 → <strong>购买货运保险</strong></p>
+          <span class="tag">中亚首选：公路汽运 / 班列</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">05</span><span class="label">报关</span></div>
+      <div class="step-card">
+        <div class="step-icon teal">🏛️</div>
+        <div class="step-content">
+          <h3>海关出口申报</h3>
+          <p>提交全套单证向中国海关申报，配合查验，审核通过后放行</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">06</span><span class="label">出运</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">📦</div>
+        <div class="step-content">
+          <h3>装货出运</h3>
+          <p>车辆装车/装船，获取提单(B/L)，寄送全套单证给客户用于目的国清关</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">07</span><span class="label">收汇</span></div>
+      <div class="step-card">
+        <div class="step-icon green">💰</div>
+        <div class="step-content">
+          <h3>外汇收款 & 结汇</h3>
+          <p>客户付款至<strong>企业对公外汇账户</strong>，银行完成收汇结汇</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">08</span><span class="label">退税</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">🧾</div>
+        <div class="step-content">
+          <h3>出口退税</h3>
+          <p>整理报关单+进项发票+收汇凭证，向税务局申报退税，回笼资金降低成本</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /process-flow -->
+
+  <!-- 红色警告 -->
+  <div class="warning-banner">
+    <h2 id="zh-warnTitle">🚨 中亚/俄语区出口 — 必踩坑预警（红线）</h2>
+    <ul>
+      <li id="zh-w1"><strong>单证必须一字不差</strong> — 发票、箱单、产地证的品名、VIN码、货值必须完全一致，否则扣货+罚款</li>
+      <li id="zh-w2"><strong>必须有俄文翻译</strong> — 出口哈萨克斯坦、乌兹别克斯坦、吉尔吉斯斯坦，所有文件必须附俄文译本</li>
+      <li id="zh-w3"><strong>车辆认证缺一不可</strong> — 合格证、商检报告、环保认证，缺任何一项直接扣车无法清关</li>
+      <li id="zh-w4"><strong>严禁低报货值</strong> — 虚假申报 = 没收货物 + 巨额罚款 + 海关信用永久降级</li>
+    </ul>
+  </div>
+
+  <!-- 避坑卡片 -->
+  <div class="section-title"><h2 id="zh-pitTitle">⛔ 高频踩坑指南</h2><div class="underline"></div></div>
+
+  <div class="pitfall-grid">
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">📝</div><h3>合同 & 付款坑</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>口头合同无效</strong> — 必须签书面合同/PI，明确违约条款和赔付标准</li>
+          <li><strong>拒绝全额后付</strong> — 海外客户拒收=巨额损失，坚持先收定金再发货</li>
+          <li><strong>FOB/CIF/DAP 要写清</strong> — 谁承担运费、保险、清关费？模糊=额外掏钱</li>
+          <li><strong>锁定汇率波动</strong> — 大额订单必须约定汇率责任方，防止汇损吃掉利润</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🚛</div><h3>物流运输坑</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>低价货代是陷阱</strong> — 报价低≠总成本低，隐藏滞箱费、换柜费、边境加急费</li>
+          <li><strong>每票必买货运保险</strong> — 不买=车辆破损丢失无法理赔，省小钱亏大钱</li>
+          <li><strong>边境延误写进合同</strong> — 中欧班列/公路常拥堵，无延误条款=被动等待</li>
+          <li><strong>车辆必须加固包装</strong> — 裸装过境必损坏，返修成本远超包装费</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🏛️</div><h3>报关 & 税务坑</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>禁止买单报关</strong> — 借他人抬头出口属违法，法人承担刑事责任</li>
+          <li><strong>发票品名要对上</strong> — 进项发票与报关单品名不一致→退税直接驳回</li>
+          <li><strong>走公账收外汇</strong> — 私户收款触发外汇局风控，资金冻结且无法退税</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🌍</div><h3>海外清关坑</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>提前查准入标准</strong> — 目的国环保认证、进口许可缺一不可，到港才发现=销毁或退运</li>
+          <li><strong>代理必须查资质</strong> — 无资质个人代理可能卷款失联，货钱两空</li>
+          <li><strong>尊重知识产权</strong> — 仿牌/无授权产品被海关直接销毁并处重罚</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2 id="zh-ctaTitle">准备好出口了？</h2>
+    <p id="zh-ctaSub">告诉我们您的需求，我们提供从采购到清关的一站式服务</p>
+    <a href="/#contact" id="zh-ctaBtn">立即咨询 →</a>
+  </div>
+
+</div><!-- /中文 -->
+
+
+<!-- ======================== 英文版 ======================== -->
+<div class="guide-section" id="guide-en">
+
+  <div class="section-title"><h2>🚀 Vehicle Export Process</h2><div class="underline"></div></div>
+  
+  <div class="process-flow">
+    <div class="step-row">
+      <div class="step-num"><span class="num">01</span><span class="label">Contract</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">🤝</div>
+        <div class="step-content">
+          <h3>Negotiation & Contract Signing</h3>
+          <p>Inquiry → Quotation → Sign PI/sales contract with trade terms (FOB/CIF), payment method</p>
+          <span class="tag">Recommended: 30% deposit + 70% against B/L copy</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">02</span><span class="label">Sourcing</span></div>
+      <div class="step-card">
+        <div class="step-icon green">🔍</div>
+        <div class="step-content">
+          <h3>Sourcing & Quality Control</h3>
+          <p>Vehicle procurement, 180-point inspection, photo/video documentation, packing list</p>
+          <span class="tag">Individual inspection report per vehicle</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">03</span><span class="label">Documents</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">📄</div>
+        <div class="step-content">
+          <h3>Full Trade Documentation</h3>
+          <p>Commercial invoice · Packing list · Vehicle certificate · Inspection report · Certificate of Origin<br><strong style="color:#dc3545;">Russian-speaking countries require Russian translations</strong></p>
+          <span class="tag">Document consistency = smooth clearance</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">04</span><span class="label">Logistics</span></div>
+      <div class="step-card">
+        <div class="step-icon purple">🚢</div>
+        <div class="step-content">
+          <h3>International Logistics Booking</h3>
+          <p>Sea freight / China-Europe railway / Trucking → Inland transport to port warehouse → <strong>Purchase cargo insurance</strong></p>
+          <span class="tag">Central Asia: trucking / railway preferred</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">05</span><span class="label">Customs</span></div>
+      <div class="step-card">
+        <div class="step-icon teal">🏛️</div>
+        <div class="step-content">
+          <h3>Export Customs Declaration</h3>
+          <p>Submit full documents to China Customs, cooperate with inspection, release after approval</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">06</span><span class="label">Shipment</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">📦</div>
+        <div class="step-content">
+          <h3>Loading & Shipment</h3>
+          <p>Vehicle loaded, obtain Bill of Lading (B/L), send full document set to buyer for destination clearance</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">07</span><span class="label">Payment</span></div>
+      <div class="step-card">
+        <div class="step-icon green">💰</div>
+        <div class="step-content">
+          <h3>Forex Receipt & Settlement</h3>
+          <p>Buyer pays to <strong>corporate forex account</strong>, bank completes settlement</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">08</span><span class="label">Refund</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">🧾</div>
+        <div class="step-content">
+          <h3>Export Tax Refund</h3>
+          <p>Compile customs form + VAT invoice + receipt, file with tax bureau to recover costs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-banner">
+    <h2>🚨 Critical Risks for Central Asian / Russian Markets (Red Lines)</h2>
+    <ul>
+      <li><strong>Documents must match exactly</strong> — Product name, VIN, value on invoice/packing list/CO must be identical word-for-word, or face detention & fines</li>
+      <li><strong>Russian translation required</strong> — Exports to Kazakhstan, Uzbekistan, Kyrgyzstan need Russian translations for ALL customs files</li>
+      <li><strong>Certifications are mandatory</strong> — Vehicle certificate, inspection report, environmental cert — missing any = vehicle detained</li>
+      <li><strong>No under-declaration ever</strong> — False reporting = cargo confiscation + huge fines + permanent customs credit downgrade</li>
+    </ul>
+  </div>
+
+  <div class="section-title"><h2>⛔ Common Pitfalls Guide</h2><div class="underline"></div></div>
+
+  <div class="pitfall-grid">
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">📝</div><h3>Contract & Payment Pitfalls</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>No oral agreements</strong> — Signed written contract/PI required with clear penalty clauses</li>
+          <li><strong>Avoid post-delivery payment</strong> — Buyer may abandon cargo; always collect deposit first</li>
+          <li><strong>Define Incoterms clearly</strong> — Who pays freight, insurance, customs? Ambiguity = extra cost</li>
+          <li><strong>Lock exchange rate</strong> — Large orders must specify currency risk responsibility</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🚛</div><h3>Logistics Pitfalls</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Ultra-low quotes are traps</strong> — Low price ≠ low total cost; hidden detention, swap, border fees</li>
+          <li><strong>Insure every shipment</strong> — No insurance = no recovery for damage or loss</li>
+          <li><strong>Border delays in contract</strong> — China-Europe railway & trucking often congested</li>
+          <li><strong>Reinforce vehicle packaging</strong> — Bare loading guarantees transit damage</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🏛️</div><h3>Customs & Tax Pitfalls</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Never use borrowed licenses</strong> — Illegal export declaration; criminal liability for legal rep</li>
+          <li><strong>Invoice details must match</strong> — Mismatched product names = tax refund rejected</li>
+          <li><strong>Corporate account only</strong> — Private receipts trigger SAFE audit & fund freeze</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🌍</div><h3>Overseas Clearance Pitfalls</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Check import rules first</strong> — Emission standards, permits, certifications — discover too late = destruction or return</li>
+          <li><strong>Verify broker license</strong> — Unlicensed agents may disappear with goods & payment</li>
+          <li><strong>Respect IP rights</strong> — Counterfeit goods destroyed with heavy penalties</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h2>Ready to Export?</h2>
+    <p>Tell us your requirements — we handle everything from sourcing to clearance</p>
+    <a href="/#contact">Get a Quote →</a>
+  </div>
+
+</div><!-- /英文 -->
+
+
+<!-- ======================== 俄文版 ======================== -->
+<div class="guide-section" id="guide-ru">
+
+  <div class="section-title"><h2>🚀 Стандартный процесс экспорта автомобилей</h2><div class="underline"></div></div>
+  
+  <div class="process-flow">
+    <div class="step-row">
+      <div class="step-num"><span class="num">01</span><span class="label">Контракт</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">🤝</div>
+        <div class="step-content">
+          <h3>Переговоры и подписание контракта</h3>
+          <p>Запрос → Коммерческое предложение → Подписание контракта/проформы с условиями FOB/CIF, способом оплаты</p>
+          <span class="tag">Рекомендуется: 30% предоплата + 70% по копии коносамента</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">02</span><span class="label">Закупка</span></div>
+      <div class="step-card">
+        <div class="step-icon green">🔍</div>
+        <div class="step-content">
+          <h3>Закупка и контроль качества</h3>
+          <p>Приобретение автомобиля, 180-точечная инспекция, фото/видео документация, упаковочный лист</p>
+          <span class="tag">Индивидуальный отчет по каждому авто</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">03</span><span class="label">Документы</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">📄</div>
+        <div class="step-content">
+          <h3>Полный пакет документов</h3>
+          <p>Коммерческий счет · Упаковочный лист · Сертификат ТС · Акт инспекции · Сертификат происхождения<br><strong style="color:#dc3545;">Для русскоязычных стран обязателен перевод на русский язык</strong></p>
+          <span class="tag">Соответствие документов = беспрепятственное оформление</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">04</span><span class="label">Логистика</span></div>
+      <div class="step-card">
+        <div class="step-icon purple">🚢</div>
+        <div class="step-content">
+          <h3>Международная логистика</h3>
+          <p>Морская перевозка / Поезд Китай-Европа / Автоперевозка → Доставка на склад → <strong>Страхование груза</strong></p>
+          <span class="tag">Центральная Азия: автоперевозки / ж/д</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">05</span><span class="label">Таможня</span></div>
+      <div class="step-card">
+        <div class="step-icon teal">🏛️</div>
+        <div class="step-content">
+          <h3>Экспортное таможенное декларирование</h3>
+          <p>Подача полного пакета документов в таможню Китая, прохождение проверки, выпуск груза</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">06</span><span class="label">Отправка</span></div>
+      <div class="step-card">
+        <div class="step-icon blue">📦</div>
+        <div class="step-content">
+          <h3>Погрузка и отправка</h3>
+          <p>Погрузка автомобиля, получение коносамента (B/L), отправка документов покупателю для таможни в стране назначения</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">07</span><span class="label">Оплата</span></div>
+      <div class="step-card">
+        <div class="step-icon green">💰</div>
+        <div class="step-content">
+          <h3>Получение валютной оплаты</h3>
+          <p>Покупатель платит на <strong>корпоративный валютный счет</strong>, банк проводит конвертацию</p>
+        </div>
+      </div>
+    </div>
+    <div class="step-connector"><div class="line"><div class="arrow"></div></div></div>
+
+    <div class="step-row">
+      <div class="step-num"><span class="num">08</span><span class="label">НДС</span></div>
+      <div class="step-card">
+        <div class="step-icon orange">🧾</div>
+        <div class="step-content">
+          <h3>Возврат экспортного НДС</h3>
+          <p>Сбор таможенной декларации + счет-фактуры НДС + выписки, подача в налоговую для возврата</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-banner">
+    <h2>🚨 Критические риски для рынков Центральной Азии и России (Красные линии)</h2>
+    <ul>
+      <li><strong>Полное соответствие документов</strong> — Название товара, VIN, стоимость в счете, упаковочном листе и сертификате происхождения должны совпадать дословно — иначе задержка и штрафы</li>
+      <li><strong>Обязательный перевод на русский</strong> — При экспорте в Казахстан, Узбекистан, Кыргызстан все файлы должны иметь перевод на русский язык</li>
+      <li><strong>Сертификация обязательна</strong> — Сертификат ТС, акт инспекции, экологический сертификат — отсутствие любого документа = задержка автомобиля</li>
+      <li><strong>Запрещено занижение стоимости</strong> — Ложная декларация = конфискация груза + огромные штрафы + понижение таможенного рейтинга навсегда</li>
+    </ul>
+  </div>
+
+  <div class="section-title"><h2>⛔ Руководство по избежанию распространенных ошибок</h2><div class="underline"></div></div>
+
+  <div class="pitfall-grid">
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">📝</div><h3>Риски контракта и оплаты</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Никаких устных договоренностей</strong> — Обязателен письменный контракт с пунктами о штрафных санкциях</li>
+          <li><strong>Избегать полной оплаты после доставки</strong> — Покупатель может отказаться от груза; всегда брать предоплату</li>
+          <li><strong>Четко определить Инкотермс</strong> — Кто платит за фрахт, страхование, таможню? Неточность = дополнительные расходы</li>
+          <li><strong>Зафиксировать курс валюты</strong> — Для крупных заказов указать сторону, несущую риски колебания курса</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🚛</div><h3>Риски логистики</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Слишком низкие цены — ловушка</strong> — Низкая цена ≠ низкая итоговая стоимость; скрытые платежи за простой, замену, границу</li>
+          <li><strong>Страховать каждую партию</strong> — Без страховки невозможно возместить ущерб от повреждения или потери</li>
+          <li><strong>Прописать задержки на границе</strong> — Поезда и грузовики часто задерживаются на границе</li>
+          <li><strong>Усилить упаковку автомобиля</strong> — Перевозка без упаковки гарантирует повреждения</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🏛️</div><h3>Таможенные и налоговые риски</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Запрещено использовать чужие лицензии</strong> — Незаконная декларация; уголовная ответственность для руководителя</li>
+          <li><strong>Данные в счете должны совпадать с декларацией</strong> — Расхождения = отказ в возврате НДС</li>
+          <li><strong>Только корпоративный счет</strong> — Оплата на личные счета вызывает проверку регулятора и заморозку средств</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-header"><div class="icon">🌍</div><h3>Риски зарубежного оформления</h3></div>
+      <div class="pitfall-body">
+        <ul>
+          <li><strong>Проверить импортные нормы заранее</strong> — Экологические стандарты, разрешения, сертификация — позднее обнаружение = уничтожение или возврат</li>
+          <li><strong>Проверить лицензию брокера</strong> — Нелицензированные агенты могут исчезнуть с грузом или оплатой</li>
+          <li><strong>Соблюдать права ИС</strong> — Контрафакт уничтожается с крупными штрафами</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h2>Готовы к экспорту?</h2>
+    <p>Расскажите о ваших требованиях — мы обеспечим полный цикл от закупки до таможенного оформления</p>
+    <a href="/#contact">Связаться с нами →</a>
+  </div>
+
+</div><!-- /俄文 -->
+
+</div><!-- /main -->
+
+<footer class="footer-mini">© 2026 Qiandu Auto. All rights reserved.</footer>
+
+<script>
+function switchGuide(lang) {
+  document.querySelectorAll('.guide-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('guide-' + lang).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
