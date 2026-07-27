@@ -137,12 +137,7 @@ const inventory = [
 const inventory = [
   { make: "Land Cruiser 2012, 4.0L Auto VX", year: 2014年07月, mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)" }
 ];
-  { make: "Honda Accord", year: 2022, mileage: "32,000 km", engine: "1.5T", price: "$18,200", tag: "In Stock", image: "" },
-  { make: "BMW X5", year: 2020, mileage: "55,000 km", engine: "3.0T", price: "$32,500", tag: "Premium", image: "" },
-  { make: "Mercedes C200", year: 2021, mileage: "38,000 km", engine: "1.5T", price: "$26,800", tag: "In Stock", image: "" },
-  { make: "Nissan Altima", year: 2022, mileage: "28,000 km", engine: "2.5L", price: "$14,500", tag: "Best Seller", image: "" },
-  { make: "Volkswagen Passat", year: 2021, mileage: "42,000 km", engine: "2.0T", price: "$16,200", tag: "In Stock", image: "" },
-];
+  
 
 // 默认占位图标（当车辆没有图片时显示）
 const placeholderIcon = '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg>';
