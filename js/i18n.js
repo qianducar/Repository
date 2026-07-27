@@ -96,9 +96,9 @@ const translations = {
   "footer-quick": { en: "Quick Links", zh: "快速链接", ru: "Быстрые ссылки" },
   "footer-service-title": { en: "Services", zh: "服务", ru: "Услуги" },
   "footer-contact-title": { en: "Contact", zh: "联系方式", ru: "Контакты" },
-  "footer-copy": { en: "All rights reserved.", zh: "保留所有权利。", ru: "Все права защищены." },
-};function switchLang(lang) {
-  // 更新按钮状态
+  "footer-copy": { en: "All rights reserved.", zh: "保留所有权利。", ru: "Все права защищено." }
+};
+  function switchLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
