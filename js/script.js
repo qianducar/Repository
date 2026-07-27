@@ -1,4 +1,4 @@
-﻿// i18n - Language switching
+// i18n - Language switching
 let currentLang = localStorage.getItem("qiandu_lang") || "en";
 
 function switchLang(lang) {
@@ -133,22 +133,24 @@ function switchLang(lang) {
 
 // Sample inventory data — replace with your actual vehicles
 const inventory = [
-  { make: "Toyota Camry", year: 2021, mileage: "45,000 km", engine: "2.5L", price: "$15,800", tag: "In Stock", image: "toyota-camry" },
-  { make: "Honda Accord", year: 2022, mileage: "32,000 km", engine: "1.5T", price: "$18,200", tag: "In Stock", image: "honda-accord" },
-  { make: "BMW X5", year: 2020, mileage: "55,000 km", engine: "3.0T", price: "$32,500", tag: "Premium", image: "bmw-x5" },
-  { make: "Mercedes C200", year: 2021, mileage: "38,000 km", engine: "1.5T", price: "$26,800", tag: "In Stock", image: "mercedes-c200" },
-  { make: "Nissan Altima", year: 2022, mileage: "28,000 km", engine: "2.5L", price: "$14,500", tag: "Best Seller", image: "nissan-altima" },
-  { make: "Volkswagen Passat", year: 2021, mileage: "42,000 km", engine: "2.0T", price: "$16,200", tag: "In Stock", image: "vw-passat" },
+  { make: "Toyota Camry", year: 2021, mileage: "45,000 km", engine: "2.5L", price: "$15,800", tag: "In Stock", image: "" },
+  { make: "Honda Accord", year: 2022, mileage: "32,000 km", engine: "1.5T", price: "$18,200", tag: "In Stock", image: "" },
+  { make: "BMW X5", year: 2020, mileage: "55,000 km", engine: "3.0T", price: "$32,500", tag: "Premium", image: "" },
+  { make: "Mercedes C200", year: 2021, mileage: "38,000 km", engine: "1.5T", price: "$26,800", tag: "In Stock", image: "" },
+  { make: "Nissan Altima", year: 2022, mileage: "28,000 km", engine: "2.5L", price: "$14,500", tag: "Best Seller", image: "" },
+  { make: "Volkswagen Passat", year: 2021, mileage: "42,000 km", engine: "2.0T", price: "$16,200", tag: "In Stock", image: "" },
 ];
 
-const carIcons = {
-  "toyota-camry": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg>',
-  "honda-accord": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg>',
-  "bmw-x5": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M13 6l2 4M9 6l-2 4"/></svg>',
-  "mercedes-c200": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M12 6v4"/></svg>',
-  "nissan-altima": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M8 6l2 4M14 6l2 4"/></svg>',
-  "vw-passat": '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M10 6l1 2M13 6l1 2"/></svg>'
-};
+// 默认占位图标（当车辆没有图片时显示）
+const placeholderIcon = '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg>';
+
+// 渲染车辆图片（真实图片 or 占位图标）
+function renderCarImage(car) {
+  if (car.image && car.image.startsWith('http')) {
+    return `<img src="${car.image}" alt="${car.make}" style="width:100%;height:220px;object-fit:cover" onerror="this.parentElement.innerHTML=placeholderIcon+'<span class=car-tag>${car.tag}</span>'"><span class="car-tag">${car.tag}</span>`;
+  }
+  return placeholderIcon + `<span class="car-tag">${car.tag}</span>`;
+}
 
 // Render inventory
 function renderInventory() {
@@ -157,8 +159,7 @@ function renderInventory() {
   grid.innerHTML = inventory.map(car => `
     <div class="car-card">
       <div class="car-image">
-        ${carIcons[car.image] || carIcons["toyota-camry"]}
-        <span class="car-tag">${car.tag}</span>
+        ${renderCarImage(car)}
       </div>
       <div class="car-info">
         <h3>${car.year} ${car.make}</h3>
