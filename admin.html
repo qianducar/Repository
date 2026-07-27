@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Qiandu Auto</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f0f1f5;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    /* ===== 顶栏 ===== */
+    .topbar {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar h1 { font-size: 20px; }
+    .topbar .actions { display: flex; gap: 10px; }
+    .topbar button {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-export { background: #2a9d8f; color: #fff; }
+    .btn-push { background: #1a73e8; color: #fff; }
+    .btn-import { background: #457b9d; color: #fff; }
+    .btn-add { background: #e63946; color: #fff; }
+
+    /* ===== 主区域 ===== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 28px 5%; }
+
+    /* ===== 统计栏 ===== */
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stat-card .num { font-size: 32px; font-weight: 800; }
+    .stat-card .label { font-size: 13px; color: #888; margin-top: 4px; }
+    .stat-card.sale .num { color: #e63946; }
+    .stat-card.sold .num { color: #999; }
+    .stat-card.ev .num { color: #2a9d8f; }
+    .stat-card.ice .num { color: #457b9d; }
+
+    /* ===== 车辆列表 ===== */
+    .car-list { display: flex; flex-direction: column; gap: 12px; }
+    .car-row {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .car-row img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #eee;
+    }
+    .car-row .info { flex: 1; }
+    .car-row .info .name { font-weight: 700; font-size: 16px; }
+    .car-row .info .sub { font-size: 13px; color: #888; }
+    .car-row .price { font-weight: 700; color: #e63946; font-size: 18px; min-width: 90px; text-align: right; }
+    .car-row .status-tag {
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .status-tag.sale { background: #e63946; }
+    .status-tag.sold { background: #999; }
+    .car-row .ops { display: flex; gap: 6px; }
+    .car-row .ops button {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .car-row .ops .edit:hover { border-color: #457b9d; color: #457b9d; }
+    .car-row .ops .toggle:hover { border-color: #e6a100; color: #e6a100; }
+    .car-row .ops .del:hover { border-color: #e63946; color: #e63946; }
+
+    /* ===== 弹窗表单 ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      width: 100%;
+      max-width: 560px;
+    }
+    .modal h2 { margin-bottom: 24px; font-size: 22px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .form-row { display: flex; gap: 16px; }
+    .form-row .form-group { flex: 1; }
+    .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .modal-actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .btn-save { background: #e63946; color: #fff; }
+    .btn-cancel { background: #eee; color: #555; }
+
+    .empty-msg { text-align: center; padding: 60px; color: #999; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 顶栏 ===== -->
+  <div class="topbar">
+    <h1>&#128663; Qiandu Auto — Vehicle Manager</h1>
+    <div class="actions">
+      <button class="btn-import" onclick="document.getElementById('importFile').click()">Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+      <button class="btn-export" onclick="exportJSON()">Export JSON</button>
+      <button class="btn-push" onclick="pushToGitHub()">🚀 Push 上线</button>
+      <button class="btn-add" onclick="openModal()">+ Add Vehicle</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 统计 -->
+    <div class="stats">
+      <div class="stat-card sale"><div class="num" id="statSale">0</div><div class="label">In Stock</div></div>
+      <div class="stat-card sold"><div class="num" id="statSold">0</div><div class="label">Sold</div></div>
+      <div class="stat-card ev"><div class="num" id="statEV">0</div><div class="label">EV</div></div>
+      <div class="stat-card ice"><div class="num" id="statICE">0</div><div class="label">Fuel</div></div>
+    </div>
+
+    <!-- 车辆列表 -->
+    <div class="car-list" id="carList"></div>
+  </div>
+
+  <!-- ===== 添加/编辑弹窗 ===== -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h2 id="modalTitle">Add Vehicle</h2>
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label>Model Name</label>
+        <input type="text" id="fModel" placeholder="e.g. Changan Lumin 2025">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Type</label>
+          <select id="fType">
+            <option value="EV">EV</option>
+            <option value="ICE">Fuel (ICE)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Year</label>
+          <input type="number" id="fYear" value="2025">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (USD)</label>
+          <input type="number" id="fPrice" placeholder="5380">
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="fStatus">
+            <option value="sale">In Stock</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Image Path (local)</label>
+        <input type="text" id="fImage" placeholder="images/changan-lumin-2025-1.jpg">
+      </div>
+      <div class="form-group">
+        <label>Fallback Image URL (if local image fails)</label>
+        <input type="text" id="fFallback" placeholder="https://images.unsplash.com/...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Range / Engine</label>
+          <input type="text" id="fRange" placeholder="EV: 205km / Fuel: 1.5T">
+        </div>
+        <div class="form-group">
+          <label>Battery / Fuel Consumption</label>
+          <input type="text" id="fBattery" placeholder="EV: 17.65kWh / Fuel: 7.5L/100km">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Color</label>
+          <input type="text" id="fColor" placeholder="White">
+        </div>
+        <div class="form-group">
+          <label>Mileage (km)</label>
+          <input type="number" id="fMileage" placeholder="12500">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Transmission</label>
+          <input type="text" id="fTrans" placeholder="Electric / Automatic">
+        </div>
+        <div class="form-group">
+          <label>Featured on homepage?</label>
+          <select id="fFeatured">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveCar()">Save Vehicle</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    //  车源管理工具
+    //  数据存在浏览器 localStorage
+    //  点 Export JSON 导出 cars.json 替换线上文件
+    // ============================================
+
+    var STORAGE_KEY = 'qiandu_cars';
+    var cars = [];
+
+    // ---- 1. 初始化：从 localStorage 读取 ----
+    function init() {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        cars = JSON.parse(saved);
+      } else {
+        // 第一次打开，尝试从同目录加载 cars.json
+        fetch('cars.json')
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            cars = data.cars || [];
+            save();
+            render();
+          })
+          .catch(function() {
+            cars = [];
+            render();
+          });
+        return;
+      }
+      render();
+    }
+
+    // ---- 2. 保存到 localStorage ----
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cars));
+    }
+
+    // ---- 3. 渲染列表 + 统计 ----
+    function render() {
+      var list = document.getElementById('carList');
+
+      // 更新统计
+      document.getElementById('statSale').textContent = cars.filter(function(c){return c.status==='sale';}).length;
+      document.getElementById('statSold').textContent = cars.filter(function(c){return c.status==='sold';}).length;
+      document.getElementById('statEV').textContent = cars.filter(function(c){return c.type==='EV';}).length;
+      document.getElementById('statICE').textContent = cars.filter(function(c){return c.type==='ICE';}).length;
+
+      if (cars.length === 0) {
+        list.innerHTML = '<div class="empty-msg">No vehicles yet. Click "Add Vehicle" to start.</div>';
+        return;
+      }
+
+      list.innerHTML = cars.map(function(car, i) {
+        var img = car.image || car.imageFallback || '';
+        var spec = car.specs.range || car.specs.engine || '';
+        return '' +
+          '<div class="car-row">' +
+            '<img src="' + (car.imageFallback || img) + '" alt="' + car.model + '" ' +
+                 'onerror="this.style.opacity=0">' +
+            '<div class="info">' +
+              '<div class="name">' + car.model + '</div>' +
+              '<div class="sub">' + car.type + ' &middot; ' + spec + ' &middot; ' +
+                  car.mileage.toLocaleString() + 'km</div>' +
+            '</div>' +
+            '<span class="status-tag ' + car.status + '">' +
+              (car.status === 'sale' ? 'In Stock' : 'Sold') + '</span>' +
+            '<div class="price">$' + car.price.toLocaleString() + '</div>' +
+            '<div class="ops">' +
+              '<button class="edit" onclick="openModal(' + i + ')">Edit</button>' +
+              '<button class="toggle" onclick="toggleStatus(' + i + ')">Toggle</button>' +
+              '<button class="del" onclick="delCar(' + i + ')">Delete</button>' +
+            '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    // ---- 4. 打开弹窗（新增或编辑）----
+    function openModal(idx) {
+      var modal = document.getElementById('modal');
+      var title = document.getElementById('modalTitle');
+
+      if (idx !== undefined) {
+        // 编辑现有车辆
+        var c = cars[idx];
+        title.textContent = 'Edit Vehicle';
+        document.getElementById('editId').value = idx;
+        document.getElementById('fModel').value = c.model;
+        document.getElementById('fType').value = c.type;
+        document.getElementById('fYear').value = c.year;
+        document.getElementById('fPrice').value = c.price;
+        document.getElementById('fStatus').value = c.status;
+        document.getElementById('fImage').value = c.image || '';
+        document.getElementById('fFallback').value = c.imageFallback || '';
+        document.getElementById('fRange').value = c.specs.range || c.specs.engine || '';
+        document.getElementById('fBattery').value = c.specs.battery || c.specs.fuelConsumption || '';
+        document.getElementById('fColor').value = c.specs.color || '';
+        document.getElementById('fMileage').value = c.mileage;
+        document.getElementById('fTrans').value = c.transmission;
+        document.getElementById('fFeatured').value = String(c.featured);
+      } else {
+        // 新增
+        title.textContent = 'Add Vehicle';
+        document.getElementById('editId').value = '';
+        ['fModel','fImage','fFallback','fRange','fBattery','fColor','fTrans'].forEach(function(id){
+          document.getElementById(id).value = '';
+        });
+        document.getElementById('fType').value = 'EV';
+        document.getElementById('fYear').value = '2025';
+        document.getElementById('fPrice').value = '';
+        document.getElementById('fStatus').value = 'sale';
+        document.getElementById('fMileage').value = '';
+        document.getElementById('fFeatured').value = 'false';
+      }
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    // ---- 5. 保存车辆（新增或更新）----
+    function saveCar() {
+      var idx = document.getElementById('editId').value;
+      var type = document.getElementById('fType').value;
+      var rangeVal = document.getElementById('fRange').value;
+      var batVal = document.getElementById('fBattery').value;
+
+      // 构建规格对象（EV 和 ICE 字段不同）
+      var specs = { color: document.getElementById('fColor').value };
+      if (type === 'EV') {
+        specs.range = rangeVal;
+        specs.battery = batVal;
+      } else {
+        specs.engine = rangeVal;
+        specs.fuelConsumption = batVal;
+      }
+
+      var car = {
+        id: idx !== '' ? cars[idx].id : document.getElementById('fModel').value.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now(),
+        model: document.getElementById('fModel').value,
+        type: type,
+        year: parseInt(document.getElementById('fYear').value) || 2025,
+        image: document.getElementById('fImage').value,
+        imageFallback: document.getElementById('fFallback').value,
+        specs: specs,
+        mileage: parseInt(document.getElementById('fMileage').value) || 0,
+        mileageUnit: 'km',
+        transmission: document.getElementById('fTrans').value,
+        drive: 'Auto',
+        price: parseInt(document.getElementById('fPrice').value) || 0,
+        currency: '$',
+        status: document.getElementById('fStatus').value,
+        featured: document.getElementById('fFeatured').value === 'true',
+        createdAt: idx !== '' ? cars[idx].createdAt : new Date().toISOString().slice(0,10)
+      };
+
+      if (idx !== '') {
+        cars[idx] = car;
+      } else {
+        cars.unshift(car);
+      }
+      save();
+      render();
+      closeModal();
+    }
+
+    // ---- 6. 切换在售/已售 ----
+    function toggleStatus(idx) {
+      cars[idx].status = cars[idx].status === 'sale' ? 'sold' : 'sale';
+      save();
+      render();
+    }
+
+    // ---- 7. 删除车辆 ----
+    function delCar(idx) {
+      if (confirm('Delete ' + cars[idx].model + '?')) {
+        cars.splice(idx, 1);
+        save();
+        render();
+      }
+    }
+
+    // ---- 8. 导出为 cars.json 文件 ----
+    function exportJSON() {
+      var data = {
+        lastUpdated: new Date().toISOString().slice(0,10),
+        cars: cars
+      };
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'cars.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ---- 9. 导入 cars.json ----
+    function importJSON(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var data = JSON.parse(e.target.result);
+          cars = data.cars || data;
+          save();
+          render();
+          alert('Imported ' + cars.length + ' vehicles.');
+        } catch (err) {
+          alert('Import failed: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // ---- 10. 一键推送到 GitHub Pages 线上 ----
+    var GITHUB_API = 'https://api.github.com';
+    var GITHUB_REPO = 'qianducar/Repository';
+    var GITHUB_BRANCH = 'main';
+
+    function getToken() {
+      return localStorage.getItem('qiandu_gh_token') || '';
+    }
+
+    function saveToken(tok) {
+      localStorage.setItem('qiandu_gh_token', tok);
+    }
+
+    // 首次使用时弹出输入框保存 Token
+    function ensureToken() {
+      var t = getToken();
+      if (t) return t;
+      t = prompt('请输入 GitHub Personal Access Token（仅保存在你浏览器本地）：\nhttps://github.com/settings/tokens → Generate new token (classic)\n勾选 repo 权限', '');
+      if (!t) { alert('需要 Token 才能推送'); return null; }
+      saveToken(t);
+      return t;
+    }
+
+    // 把后台车辆数据转换成线上 script.js 的 inventory 格式
+    function generateInventoryCode() {
+      if (cars.length === 0) return '// No vehicles';
+      return cars.map(function(c) {
+        var tag = c.status === 'sale' ? 'In Stock' : 'Sold';
+        if (c.featured && c.status === 'sale') tag = 'Premium';
+        var img = c.image || c.imageFallback || '';
+        var engine = c.specs.engine || c.specs.range || c.transmission || '';
+        var yearDisplay = typeof c.year === 'number' ? c.year + '年01月' : (c.yearDisplay || c.year);
+        var mileageDisplay = c.mileage >= 10000 ? (c.mileage / 10000).toFixed(1) + '万公里' : c.mileage + '公里';
+        var priceDisplay = '$' + c.price.toLocaleString();
+        return '  { make: "' + c.model + '", year: "' + yearDisplay + '", mileage: "' + mileageDisplay + '", engine: "' + engine + '", price: "' + priceDisplay + (c.currency === 'USD ' ? '' : '') + '", tag: "' + tag + '", image: "' + img + '" }';
+      }).join(',\n');
+    }
+
+    async function pushToGitHub() {
+      var token = ensureToken();
+      if (!token) return;
+
+      var btn = document.querySelector('.btn-push');
+      var origText = btn.textContent;
+      btn.textContent = '⏳ 推送中...';
+      btn.disabled = true;
+
+      try {
+        // 1. 获取当前 script.js 的 SHA
+        var headRes = await fetch(GITHUB_API + '/repos/' + GITHUB_REPO + '/contents/js/script.js?ref=' + GITHUB_BRANCH, {
+          headers: { 'Authorization': 'token ' + token }
+        });
+        if (!headRes.ok) throw new Error('获取文件失败: ' + headRes.status);
+        var headData = await headRes.json();
+        var sha = headData.sha;
+
+        // 2. 读取当前 script.js 内容，替换 inventory 部分
+        var currentContent = decodeURIComponent(escape(atob(headData.content)));
+        var newInventory = generateInventoryCode();
+        var newContent = currentContent.replace(
+          /const inventory = \[[\s\S]*?\];/,
+          'const inventory = [\n' + newInventory + '\n];'
+        );
+
+        // 3. 推送到 GitHub
+        var pushRes = await fetch(GITHUB_API + '/repos/' + GITHUB_REPO + '/contents/js/script.js', {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'token ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: 'Update inventory: ' + cars.length + ' vehicles [' + new Date().toLocaleDateString() + ']',
+            content: btoa(unescape(encodeURIComponent(newContent))),
+            sha: sha,
+            branch: GITHUB_BRANCH
+          })
+        });
+
+        if (!pushRes.ok) {
+          var errData = await pushRes.json();
+          throw new Error(errData.message || '推送失败: ' + pushRes.status);
+        }
+
+        alert('✅ 推送成功！' + cars.length + ' 台车已上线\n1-2分钟后刷新 qianduauto.me 查看');
+      } catch (err) {
+        alert('❌ 推送失败: ' + err.message);
+      } finally {
+        btn.textContent = origText;
+        btn.disabled = false;
+      }
+    }
+
+    // ---- 启动 ----
+    init();
+  </script>
+
+</body>
+</html>
