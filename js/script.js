@@ -131,17 +131,12 @@ function switchLang(lang) {
   });
 }
 
-// Sample inventory data — replace with your actual vehicles
+// Inventory data — real vehicles
 const inventory = [
- // 车辆数据 — 由管理后台生成
-const inventory = [
-  { make: "Land Cruiser 2012, 4.0L Auto VX", year: 2014年07月, mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)" }
-];// 车辆数据 — 由管理后台生成
-const inventory = [
-  { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: 2016年09月, mileage: "6.1万公里", engine: "自动 / 4L", price: " 61738.60 USD", tag: "In Stock", image: "https://2sc2.autoimg.cn/escimg/g33/M08/FF/64/720x540_0_q87_c42_autohomecar__ChxpVmoT8PKAC1z7AArStXLi0Ps500.jpg/https://2sc2.autoimg.cn/escimg/g34/M01/F7/AD/720x540_0_q87_c42_autohomecar__ChtpWGoT8G-AHB6XAAmhaTmN6CY697.jpg" }
-];// 车辆数据 — 由管理后台生成
-const inventory = [
-  { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: 2026年01月, mileage: "0.9万公里", engine: "自动 / 2.4L", price: "75034 USD", tag: "Premium", image: "https://2sc2.autoimg.cn/escimg/g33/M07/2A/03/720x540_0_q87_c42_autohomecar__Chto52nVxj6ATIP_AAsUXNSVlOA652.jpg/https://2sc2.autoimg.cn/escimg/g33/M01/29/F0/720x540_0_q87_c42_autohomecar__ChxpVWnVxkCAB9DbAAdZ2C7UfPo312.jpg/https://2sc2.autoimg.cn/escimg/g33/M04/2A/04/720x540_0_q87_c42_autohomecar__Chto52nVxkSABfLnAAz_MXvKHh8867.jpg" }
+  { make: "Land Cruiser 2012, 4.0L Auto VX", year: "2014年07月", mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "images/land-cruiser-2012-1.jpg" },
+  { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: "2016年09月", mileage: "11.1万公里", engine: "自动 / 4L", price: "USD 61,738.60", tag: "In Stock", image: "images/land-cruiser-2016-vxr-1.jpg" },
+  { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: "2026年01月", mileage: "0.9万公里", engine: "自动 / 2.4T", price: "USD 75,034", tag: "Premium", image: "images/prado-2025-flagship-vx-1.jpg" },
+  { make: "Toyota bZ7 (BoZhi 7) 2025 — EV", year: "2026年04月", mileage: "0.3万公里", engine: "纯电 EV", price: "$28,020", tag: "In Stock", image: "images/toyota-bz7-2025-1.jpg" }
 ];
   
 
@@ -150,7 +145,7 @@ const placeholderIcon = '<svg width="80" height="80" viewBox="0 0 24 24" fill="n
 
 // 渲染车辆图片（真实图片 or 占位图标）
 function renderCarImage(car) {
-  if (car.image && car.image.startsWith('http')) {
+  if (car.image && (car.image.startsWith('http') || car.image.startsWith('images/'))) {
     return `<img src="${car.image}" alt="${car.make}" style="width:100%;height:220px;object-fit:cover" onerror="this.parentElement.innerHTML=placeholderIcon+'<span class=car-tag>${car.tag}</span>'"><span class="car-tag">${car.tag}</span>`;
   }
   return placeholderIcon + `<span class="car-tag">${car.tag}</span>`;
