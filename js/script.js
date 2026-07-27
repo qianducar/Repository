@@ -136,6 +136,9 @@ const inventory = [
  // 车辆数据 — 由管理后台生成
 const inventory = [
   { make: "Land Cruiser 2012, 4.0L Auto VX", year: 2014年07月, mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)/javascript:void(0)" }
+];// 车辆数据 — 由管理后台生成
+const inventory = [
+  { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: 2016年09月, mileage: "6.1万公里", engine: "自动 / 4L", price: " 61738.60 USD", tag: "In Stock", image: "https://2sc2.autoimg.cn/escimg/g33/M08/FF/64/720x540_0_q87_c42_autohomecar__ChxpVmoT8PKAC1z7AArStXLi0Ps500.jpg/https://2sc2.autoimg.cn/escimg/g34/M01/F7/AD/720x540_0_q87_c42_autohomecar__ChtpWGoT8G-AHB6XAAmhaTmN6CY697.jpg" }
 ];
   
 
