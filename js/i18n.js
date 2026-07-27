@@ -97,4 +97,28 @@ const translations = {
   "footer-service-title": { en: "Services", zh: "服务", ru: "Услуги" },
   "footer-contact-title": { en: "Contact", zh: "联系方式", ru: "Контакты" },
   "footer-copy": { en: "All rights reserved.", zh: "保留所有权利。", ru: "Все права защищены." },
-};
+};function switchLang(lang) {
+  // 更新按钮状态
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  
+  // 切换所有带 data-i18n 属性的元素
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[key] && translations[key][lang]) {
+      el.innerHTML = translations[key][lang];
+    }
+  });
+  
+  // 保存选择到localStorage
+  localStorage.setItem('lang', lang);
+}
+
+// 页面加载时恢复语言选择
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('lang');
+  if (saved && saved !== 'en') {
+    switchLang(saved);
+  }
+});
