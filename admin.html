@@ -10,12 +10,17 @@
 
     .topbar { background: #1a1a2e; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
     .topbar h1 { font-size: 18px; display: flex; align-items: center; gap: 8px; }
-    .topbar .actions { display: flex; gap: 10px; }
+    .topbar .actions { display: flex; gap: 10px; align-items: center; }
     .topbar button { padding: 8px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; }
     .btn-push { background: #1a73e8; color: #fff; }
     .btn-push:hover { background: #1557b0; }
     .btn-preview { background: #34a853; color: #fff; }
     .btn-preview:hover { background: #2d8e47; }
+    .btn-logout { background: #e63946; color: #fff; }
+    .btn-logout:hover { background: #c62e3a; }
+    .role-badge { font-size: 12px; padding: 3px 10px; border-radius: 5px; font-weight: 600; }
+    .role-admin { background: #1a73e8; color: #fff; }
+    .role-staff { background: #f59e0b; color: #fff; }
 
     .layout { display: flex; min-height: calc(100vh - 56px); }
     .sidebar { width: 220px; background: #fff; border-right: 1px solid #e0e0e0; flex-shrink: 0; }
@@ -106,93 +111,67 @@
 
     /* ===== 图片上传区域 ===== */
     .image-upload-zone {
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      padding: 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: #fafbfc;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      border: 2px dashed #ccc; border-radius: 10px; padding: 24px; text-align: center;
+      cursor: pointer; transition: all 0.2s; background: #fafbfc; min-height: 120px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;
     }
-    .image-upload-zone:hover, .image-upload-zone.drag-over {
-      border-color: #1a73e8;
-      background: #f0f4ff;
-    }
-    .image-upload-zone.has-image {
-      border-style: solid;
-      border-color: #2a9d8f;
-      background: #f0fdf6;
-      padding: 8px;
-    }
-    .image-upload-zone .upload-icon {
-      font-size: 36px;
-      margin-bottom: 8px;
-      color: #999;
-    }
-    .image-upload-zone .upload-text {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-    }
-    .image-upload-zone .upload-hint {
-      font-size: 12px;
-      color: #999;
-      margin-top: 4px;
-    }
-    .image-upload-zone img.preview-img {
-      max-width: 100%;
-      max-height: 180px;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-    .image-upload-zone .preview-actions {
-      margin-top: 8px;
-      display: flex;
-      gap: 8px;
-    }
-    .image-upload-zone .preview-actions button {
-      padding: 4px 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background: #fff;
-      font-size: 12px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+    .image-upload-zone:hover, .image-upload-zone.drag-over { border-color: #1a73e8; background: #f0f4ff; }
+    .image-upload-zone.has-image { border-style: solid; border-color: #2a9d8f; background: #f0fdf6; padding: 8px; }
+    .image-upload-zone .upload-icon { font-size: 36px; margin-bottom: 8px; color: #999; }
+    .image-upload-zone .upload-text { font-size: 14px; color: #666; line-height: 1.5; }
+    .image-upload-zone .upload-hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .image-upload-zone img.preview-img { max-width: 100%; max-height: 180px; border-radius: 8px; object-fit: contain; }
+    .image-upload-zone .preview-actions { margin-top: 8px; display: flex; gap: 8px; }
+    .image-upload-zone .preview-actions button { padding: 4px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; font-size: 12px; cursor: pointer; font-weight: 600; }
     .image-upload-zone .preview-actions .btn-replace:hover { border-color: #1a73e8; color: #1a73e8; }
     .image-upload-zone .preview-actions .btn-remove:hover { border-color: #e63946; color: #e63946; }
-    .image-upload-zone .preview-info {
-      font-size: 11px;
-      color: #2a9d8f;
-      margin-top: 4px;
-    }
+    .image-upload-zone .preview-info { font-size: 11px; color: #2a9d8f; margin-top: 4px; }
     .image-upload-zone input[type=file] { display: none; }
 
     /* ===== 推送日志 ===== */
-    .push-log {
-      background: #1a1a2e;
-      color: #a0f0a0;
-      font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 12px;
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-top: 12px;
-      max-height: 250px;
-      overflow-y: auto;
-      display: none;
-      line-height: 1.8;
-    }
+    .push-log { background: #1a1a2e; color: #a0f0a0; font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; border-radius: 8px; padding: 14px 18px; margin-top: 12px; max-height: 250px; overflow-y: auto; display: none; line-height: 1.8; }
     .push-log.show { display: block; }
     .push-log .log-info { color: #88c8ff; }
     .push-log .log-warn { color: #f0c040; }
     .push-log .log-error { color: #ff6b6b; }
     .push-log .log-success { color: #6bff6b; }
+
+    /* ===== 登录页 ===== */
+    .login-overlay {
+      position: fixed; inset: 0; background: #1a1a2e;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column;
+    }
+    .login-overlay.hidden { display: none; }
+    .login-box {
+      background: #fff; border-radius: 16px; padding: 40px;
+      width: 360px; max-width: 90vw; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .login-box .logo { font-size: 40px; margin-bottom: 8px; }
+    .login-box h1 { font-size: 22px; margin-bottom: 4px; color: #1a1a2e; }
+    .login-box .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 16px; margin-bottom: 14px; transition: border .2s; text-align: center;
+      letter-spacing: 2px;
+    }
+    .login-box input:focus { border-color: #1a73e8; outline: none; }
+    .login-box .btn-login {
+      width: 100%; padding: 14px; background: #e63946; color: #fff; border: none;
+      border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s;
+    }
+    .login-box .btn-login:hover { background: #c62e3a; }
+    .login-box .login-hint { font-size: 12px; color: #aaa; margin-top: 16px; }
+    .login-error { color: #e63946; font-size: 13px; margin-bottom: 10px; display: none; }
+    .login-error.show { display: block; }
+
+    /* ===== 员工提示横幅 ===== */
+    .staff-notice {
+      background: #fff3cd; color: #856404; padding: 10px 24px; text-align: center;
+      font-size: 13px; font-weight: 600; display: none;
+    }
+    .staff-notice.show { display: block; }
 
     @media (max-width: 900px) {
       .svc-edit-grid, .step-edit-grid, .stats-edit-grid { grid-template-columns: 1fr; }
@@ -204,25 +183,46 @@
 </head>
 <body>
 
+<!-- ===== 登录页 ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="logo">🚗</div>
+    <h1>QianduAuto 后台</h1>
+    <p class="subtitle">请输入密码登录</p>
+    <div class="login-error" id="loginError">密码错误，请重试</div>
+    <input type="password" id="loginPassword" placeholder="输入密码" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">登 录</button>
+    <div class="login-hint">管理员 / 员工均可从此登录</div>
+  </div>
+</div>
+
+<!-- ===== 员工提示横幅 ===== -->
+<div class="staff-notice" id="staffNotice">
+  ⚠️ 员工模式：只能添加/编辑车辆，修改后请联系管理员点击「上线」推送
+</div>
+
+<!-- 顶栏 -->
 <div class="topbar">
   <h1>🚗 QianduAuto <span style="font-weight:400;font-size:14px;color:#aaa;">管理后台</span></h1>
   <div class="actions">
+    <span class="role-badge" id="roleBadge" style="display:none;"></span>
     <button class="btn-preview" onclick="window.open('/','_blank')">👁 预览网站</button>
-    <button class="btn-push" onclick="pushAllToGitHub()">🚀 Push 上线</button>
+    <button class="btn-push" id="pushBtn" onclick="pushAllToGitHub()" style="display:none;">🚀 Push 上线</button>
+    <button class="btn-logout" onclick="doLogout()">退出</button>
   </div>
 </div>
 
 <div class="layout">
   <aside class="sidebar">
-    <ul class="sidebar-nav">
-      <li><a href="#" class="active" data-page="dashboard" onclick="switchPage('dashboard',this)"><span class="icon">📊</span> Dashboard</a></li>
+    <ul class="sidebar-nav" id="sidebarNav">
+      <li><a href="#" class="active" data-page="dashboard" onclick="switchPage('dashboard',this)" data-admin="1"><span class="icon">📊</span> Dashboard</a></li>
       <li><a href="#" data-page="vehicles" onclick="switchPage('vehicles',this)"><span class="icon">🚗</span> 车辆管理</a></li>
-      <li><a href="#" data-page="hero" onclick="switchPage('hero',this)"><span class="icon">🎯</span> 首页横幅</a></li>
-      <li><a href="#" data-page="services" onclick="switchPage('services',this)"><span class="icon">⚙️</span> 服务介绍</a></li>
-      <li><a href="#" data-page="process" onclick="switchPage('process',this)"><span class="icon">📋</span> 流程步骤</a></li>
-      <li><a href="#" data-page="about" onclick="switchPage('about',this)"><span class="icon">🏢</span> 关于我们</a></li>
-      <li><a href="#" data-page="contact" onclick="switchPage('contact',this)"><span class="icon">📞</span> 联系方式</a></li>
-      <li><a href="#" data-page="footer" onclick="switchPage('footer',this)"><span class="icon">📝</span> 页脚信息</a></li>
+      <li><a href="#" data-page="hero" onclick="switchPage('hero',this)" data-admin="1"><span class="icon">🎯</span> 首页横幅</a></li>
+      <li><a href="#" data-page="services" onclick="switchPage('services',this)" data-admin="1"><span class="icon">⚙️</span> 服务介绍</a></li>
+      <li><a href="#" data-page="process" onclick="switchPage('process',this)" data-admin="1"><span class="icon">📋</span> 流程步骤</a></li>
+      <li><a href="#" data-page="about" onclick="switchPage('about',this)" data-admin="1"><span class="icon">🏢</span> 关于我们</a></li>
+      <li><a href="#" data-page="contact" onclick="switchPage('contact',this)" data-admin="1"><span class="icon">📞</span> 联系方式</a></li>
+      <li><a href="#" data-page="footer" onclick="switchPage('footer',this)" data-admin="1"><span class="icon">📝</span> 页脚信息</a></li>
     </ul>
   </aside>
 
@@ -394,8 +394,6 @@
       <div class="form-group"><label>发动机/动力</label><input type="text" id="cf-engine" placeholder="自动 / 2.0T 或 纯电 EV"></div>
       <div class="form-group"><label>状态</label><select id="cf-status"><option value="sale">In Stock 在售</option><option value="sold">Sold 已售</option></select></div>
     </div>
-
-    <!-- ===== 图片上传区域（替换原来的文本输入框） ===== -->
     <div class="form-group">
       <label>车辆照片 📷</label>
       <div class="image-upload-zone" id="imageDropZone" onclick="document.getElementById('imageFileInput').click()">
@@ -413,7 +411,6 @@
         <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageSelect(event)" onclick="event.stopPropagation()">
       </div>
     </div>
-
     <div class="form-row">
       <div class="form-group"><label>颜色</label><input type="text" id="cf-color" placeholder="白色"></div>
       <div class="form-group"><label>标签</label><select id="cf-tag"><option value="In Stock">In Stock</option><option value="Premium">Premium ⭐</option><option value="Best Seller">Best Seller 🔥</option><option value="New Arrival">New Arrival ✨</option></select></div>
@@ -430,12 +427,20 @@
 
 <script>
 // ============================================================
-//  QianduAuto 全能管理后台 v2
-//  新增：图片拖拽上传 + 一键推送（含图片）
+//  QianduAuto 全能管理后台 v3
+//  新增：密码登录 + 管理员/员工双角色权限
 // ============================================================
 
 var DB_KEY = 'qiandu_admin_data';
-var IMG_QUEUE_KEY = 'qiandu_img_queue';  // 待上传图片队列
+var IMG_QUEUE_KEY = 'qiandu_img_queue';
+var AUTH_KEY = 'qiandu_auth_role';
+
+// ===== 密码 =====
+var ADMIN_PWD = 'Jw156890';
+var STAFF_PWD = 'X006521';
+
+// ===== 当前角色 =====
+var currentRole = null;  // 'admin' | 'staff'
 
 // ---- 默认数据 ----
 var DEFAULTS = {
@@ -468,11 +473,68 @@ var DEFAULTS = {
 };
 
 // ============================================================
+//  登录 / 权限
+// ============================================================
+function doLogin() {
+  var pwd = document.getElementById('loginPassword').value;
+  var errEl = document.getElementById('loginError');
+
+  if (pwd === ADMIN_PWD) {
+    currentRole = 'admin';
+  } else if (pwd === STAFF_PWD) {
+    currentRole = 'staff';
+  } else {
+    errEl.classList.add('show');
+    document.getElementById('loginPassword').value = '';
+    return;
+  }
+
+  sessionStorage.setItem(AUTH_KEY, currentRole);
+  document.getElementById('loginOverlay').classList.add('hidden');
+  applyRole();
+}
+
+function doLogout() {
+  sessionStorage.removeItem(AUTH_KEY);
+  currentRole = null;
+  location.reload();
+}
+
+function applyRole() {
+  var badge = document.getElementById('roleBadge');
+  var pushBtn = document.getElementById('pushBtn');
+  var staffNotice = document.getElementById('staffNotice');
+
+  if (currentRole === 'admin') {
+    badge.textContent = '🔑 管理员';
+    badge.className = 'role-badge role-admin';
+    badge.style.display = 'inline-block';
+    pushBtn.style.display = 'inline-block';
+    staffNotice.classList.remove('show');
+    // 显示所有侧边栏菜单
+    document.querySelectorAll('#sidebarNav li a').forEach(function(a) { a.parentElement.style.display = ''; });
+  } else if (currentRole === 'staff') {
+    badge.textContent = '👷 员工';
+    badge.className = 'role-badge role-staff';
+    badge.style.display = 'inline-block';
+    pushBtn.style.display = 'none';
+    staffNotice.classList.add('show');
+    // 隐藏管理员菜单，只留车辆管理
+    document.querySelectorAll('#sidebarNav li a').forEach(function(a) {
+      if (a.dataset.admin) { a.parentElement.style.display = 'none'; }
+      else { a.parentElement.style.display = ''; }
+    });
+    // 默认跳到车辆管理
+    switchPage('vehicles', document.querySelector('#sidebarNav a[data-page="vehicles"]'));
+  }
+}
+
+// ============================================================
 //  数据加载
 // ============================================================
 var db;
-var currentCarImageData = null;   // 当前弹窗里的图片 base64 数据
-var currentCarImageName = null;   // 当前弹窗里的图片文件名
+var currentCarImageData = null;
+var currentCarImageName = null;
 
 function loadData() {
   var saved = localStorage.getItem(DB_KEY);
@@ -500,6 +562,14 @@ function saveImgQueue(q) {
 //  页面切换
 // ============================================================
 function switchPage(pageName, el) {
+  // 员工不能访问管理员页面
+  if (currentRole === 'staff') {
+    var link = document.querySelector('#sidebarNav a[data-page="'+pageName+'"]');
+    if (link && link.dataset.admin) {
+      showToast('员工无权访问此页面', 'error');
+      return;
+    }
+  }
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.sidebar-nav a').forEach(function(a){ a.classList.remove('active'); });
   document.getElementById('page-'+pageName).classList.add('active');
@@ -550,8 +620,6 @@ function renderDashboard() {
 // ============================================================
 //  图片处理
 // ============================================================
-
-// 压缩图片：最大宽度 1200px，质量 0.75，返回 base64
 function compressImage(file) {
   return new Promise(function(resolve, reject) {
     var reader = new FileReader();
@@ -577,7 +645,6 @@ function compressImage(file) {
   });
 }
 
-// 生成图片文件名
 function generateImageName(modelName) {
   var base = modelName.toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -587,7 +654,6 @@ function generateImageName(modelName) {
   return 'images/' + base + '-' + ts + '.jpg';
 }
 
-// 处理文件选择
 function handleImageSelect(e) {
   var file = e.target.files[0];
   if (!file) return;
@@ -604,8 +670,6 @@ function processImageFile(file) {
     currentCarImageData = result.dataUrl;
     var modelName = document.getElementById('cf-model').value || 'car';
     currentCarImageName = generateImageName(modelName);
-
-    // 显示预览
     var preview = document.getElementById('imagePreview');
     preview.src = result.dataUrl;
     preview.style.display = 'block';
@@ -613,10 +677,9 @@ function processImageFile(file) {
     document.getElementById('previewActions').style.display = 'flex';
     document.getElementById('previewInfo').style.display = 'block';
     document.getElementById('previewInfo').textContent =
-      result.width + '×' + result.height + ' · ' + result.sizeKB + 'KB · ' + currentCarImageName;
+      result.width + 'x' + result.height + ' | ' + result.sizeKB + 'KB | ' + currentCarImageName;
     document.getElementById('imageDropZone').classList.add('has-image');
-
-    showToast('✅ 图片就绪（' + result.sizeKB + 'KB），保存车辆后点🚀一键上线', 'success');
+    showToast('图片就绪（' + result.sizeKB + 'KB），保存车辆后' + (currentRole==='staff'?'通知管理员上线':'点火箭上线'), 'success');
   }).catch(function(err) {
     showToast('图片处理失败: ' + err.message, 'error');
   });
@@ -634,37 +697,20 @@ function removeImage() {
   document.getElementById('imageFileInput').value = '';
 }
 
-// ============================================================
-//  拖拽支持
-// ============================================================
 (function initDropZone() {
-  var zone = document.getElementById('imageDropZone');
-
-  zone.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    zone.classList.add('drag-over');
-  });
-
-  zone.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    zone.classList.remove('drag-over');
-  });
-
-  zone.addEventListener('drop', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    zone.classList.remove('drag-over');
-
-    var files = e.dataTransfer.files;
-    if (files.length === 0) return;
-    var file = files[0];
-    if (!file.type.match(/^image\//)) {
-      showToast('请拖入图片文件（JPG/PNG/WebP）', 'error');
-      return;
-    }
-    processImageFile(file);
+  document.addEventListener('DOMContentLoaded', function() {
+    var zone = document.getElementById('imageDropZone');
+    if (!zone) return;
+    zone.addEventListener('dragover', function(e) { e.preventDefault(); e.stopPropagation(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function(e) { e.preventDefault(); e.stopPropagation(); zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault(); e.stopPropagation(); zone.classList.remove('drag-over');
+      var files = e.dataTransfer.files;
+      if (files.length === 0) return;
+      var file = files[0];
+      if (!file.type.match(/^image\//)) { showToast('请拖入图片文件（JPG/PNG/WebP）', 'error'); return; }
+      processImageFile(file);
+    });
   });
 })();
 
@@ -678,7 +724,7 @@ function renderCars() {
   list.innerHTML = cars.map(function(c,i){
     return '<div class="car-row">'+
       '<img src="'+(c.image||'')+'" alt="" onerror="this.style.display=\'none\'">'+
-      '<div class="info"><div class="name">'+c.make+'</div><div class="sub">'+c.year+' · '+c.mileage+' · '+c.engine+'</div></div>'+
+      '<div class="info"><div class="name">'+c.make+'</div><div class="sub">'+c.year+' | '+c.mileage+' | '+c.engine+'</div></div>'+
       '<span class="status-tag '+(c.tag==='Premium'?'tag-premium':'tag-sale')+'">'+c.tag+'</span>'+
       '<div class="price">'+c.price+'</div>'+
       '<div class="ops"><button class="edit" onclick="openCarModal('+i+')">编辑</button><button class="del" onclick="deleteCar('+i+')">删除</button></div>'+
@@ -688,9 +734,7 @@ function renderCars() {
 
 function openCarModal(idx) {
   var m = document.getElementById('carModal'); m.classList.add('show');
-  // 重置图片状态
   removeImage();
-
   if(idx!==undefined){
     var c=db.cars[idx];
     document.getElementById('carModalTitle').textContent='编辑车辆';
@@ -703,17 +747,13 @@ function openCarModal(idx) {
     document.getElementById('cf-tag').value=c.tag;
     document.getElementById('cf-status').value=c.tag==='Sold'?'sold':'sale';
     document.getElementById('cf-color').value=c.color||'';
-
-    // 如果已有图片，显示预览
     if (c.image && c.image.startsWith('images/')) {
-      // 检查图片队列中是否有该图片的数据
       var queue = getImgQueue();
       if (queue[c.image]) {
         currentCarImageData = queue[c.image];
         currentCarImageName = c.image;
         showImagePreview(currentCarImageData, currentCarImageName);
       } else {
-        // 尝试从线上加载预览
         var preview = document.getElementById('imagePreview');
         preview.src = '/' + c.image;
         preview.style.display = 'block';
@@ -723,7 +763,6 @@ function openCarModal(idx) {
         document.getElementById('previewInfo').textContent = '线上图片: ' + c.image;
         document.getElementById('imageDropZone').classList.add('has-image');
         currentCarImageName = c.image;
-        // 不在队列中，说明已上线，不需要重新上传
       }
     }
   }else{
@@ -751,25 +790,19 @@ function saveCar(){
   var mileage=parseInt(document.getElementById('cf-mileage').value)||0;
   var mDisplay=mileage>=10000?(mileage/10000).toFixed(1)+'万公里':mileage+'公里';
   var price=document.getElementById('cf-price').value;
-
   var imagePath;
   if (currentCarImageData) {
-    // 有新的图片数据
     if (!currentCarImageName) {
       var modelName = document.getElementById('cf-model').value || 'car';
       currentCarImageName = generateImageName(modelName);
     }
     imagePath = currentCarImageName;
-
-    // 存入待上传队列
     var queue = getImgQueue();
     queue[currentCarImageName] = currentCarImageData;
     saveImgQueue(queue);
   } else {
-    // 保留原有图片路径（如果有的话）
     imagePath = (idx!=='' && db.cars[parseInt(idx)]) ? db.cars[parseInt(idx)].image : '';
   }
-
   var car={
     make:document.getElementById('cf-model').value,
     year:document.getElementById('cf-year').value,
@@ -784,9 +817,13 @@ function saveCar(){
   saveData();renderCars();closeCarModal();
 
   if (currentCarImageData) {
-    showToast('✅ 车辆已保存，图片将在推送时自动上传', 'success');
+    if (currentRole === 'staff') {
+      showToast('车辆已保存！图片已暂存，待管理员上线推送后网站可见', 'success');
+    } else {
+      showToast('车辆已保存，图片将在推送时自动上传', 'success');
+    }
   } else {
-    showToast('✅ 已保存到本地');
+    showToast('已保存到本地');
   }
 }
 
@@ -809,7 +846,6 @@ function renderHero(){
     for(var i=1;i<=4;i++){document.getElementById('stat'+i+'-num').value=(h.stats[i-1]&&h.stats[i-1].num)||'';document.getElementById('stat'+i+'-label').value=(h.stats[i-1]&&h.stats[i-1].label)||'';}
   }
 }
-
 function saveHero(){
   db.hero={
     badge:document.getElementById('hero-badge').value,
@@ -828,9 +864,6 @@ function saveHero(){
   saveData();
 }
 
-// ============================================================
-//  服务编辑
-// ============================================================
 function renderServices(){
   var s=db.services;
   document.getElementById('svc-tag').value=s.tag||'';
@@ -841,7 +874,6 @@ function renderServices(){
     return '<div class="svc-edit-item"><h4>服务 '+(i+1)+'</h4><div class="form-group"><label>标题</label><input type="text" data-svc-i="'+i+'" data-field="title" value="'+item.title+'"></div><div class="form-group"><label>描述</label><textarea data-svc-i="'+i+'" data-field="desc" rows="3">'+item.desc+'</textarea></div></div>';
   }).join('');
 }
-
 function saveServices(){
   db.services={tag:document.getElementById('svc-tag').value,title:document.getElementById('svc-title').value,desc:document.getElementById('svc-desc').value,items:[]};
   document.querySelectorAll('#svcGrid .svc-edit-item').forEach(function(el){
@@ -850,9 +882,6 @@ function saveServices(){
   saveData();
 }
 
-// ============================================================
-//  流程编辑
-// ============================================================
 function renderProcess(){
   var p=db.process;
   document.getElementById('proc-tag').value=p.tag||'';
@@ -863,7 +892,6 @@ function renderProcess(){
     return '<div class="step-edit-item"><div class="step-num">0'+(i+1)+'</div><div class="form-group"><label>标题</label><input type="text" data-step-i="'+i+'" data-field="title" value="'+step.title+'"></div><div class="form-group"><label>描述</label><textarea data-step-i="'+i+'" data-field="desc" rows="2">'+step.desc+'</textarea></div></div>';
   }).join('');
 }
-
 function saveProcess(){
   db.process={tag:document.getElementById('proc-tag').value,title:document.getElementById('proc-title').value,desc:document.getElementById('proc-desc').value,steps:[]};
   document.querySelectorAll('#stepGrid .step-edit-item').forEach(function(el){
@@ -872,9 +900,6 @@ function saveProcess(){
   saveData();
 }
 
-// ============================================================
-//  关于我们
-// ============================================================
 function renderAbout(){
   var a=db.about;
   document.getElementById('about-tag').value=a.tag||'';
@@ -886,7 +911,6 @@ function renderAbout(){
   document.getElementById('about-f3').value=(a.features&&a.features[2])||'';
   document.getElementById('about-f4').value=(a.features&&a.features[3])||'';
 }
-
 function saveAbout(){
   db.about={tag:document.getElementById('about-tag').value,title:document.getElementById('about-title').value,p1:document.getElementById('about-p1').value,p2:document.getElementById('about-p2').value,features:[
     document.getElementById('about-f1').value,document.getElementById('about-f2').value,document.getElementById('about-f3').value,document.getElementById('about-f4').value
@@ -894,9 +918,6 @@ function saveAbout(){
   saveData();
 }
 
-// ============================================================
-//  联系方式
-// ============================================================
 function renderContact(){
   var c=db.contact;
   document.getElementById('contact-tag').value=c.tag||'';
@@ -907,32 +928,24 @@ function renderContact(){
   document.getElementById('contact-phone').value=c.phone||'';
   document.getElementById('contact-response').value=c.response||'';
 }
-
 function saveContact(){
   db.contact={tag:document.getElementById('contact-tag').value,title:document.getElementById('contact-title').value,subtitle:document.getElementById('contact-subtitle').value,email:document.getElementById('contact-email').value,address:document.getElementById('contact-address').value,phone:document.getElementById('contact-phone').value,response:document.getElementById('contact-response').value};
   saveData();
 }
 
-// ============================================================
-//  页脚
-// ============================================================
 function renderFooter(){
   var f=db.footer;
   document.getElementById('footer-brand-text').value=f.brandText||'';
   document.getElementById('footer-copyright').value=f.copyright||'';
 }
-
 function saveFooter(){
   db.footer={brandText:document.getElementById('footer-brand-text').value,copyright:document.getElementById('footer-copyright').value};
   saveData();
 }
 
-// ============================================================
-//  全部保存本地
-// ============================================================
 function saveAllLocal(){
   saveHero();saveServices();saveProcess();saveAbout();saveContact();saveFooter();
-  showToast('✅ 所有内容已保存到本地浏览器');
+  showToast('所有内容已保存到本地浏览器');
 }
 
 // ============================================================
@@ -948,74 +961,65 @@ function setGHToken(t){localStorage.setItem('qiandu_gh_token',t);}
 function ensureToken(){
   var t=getGHToken();
   if(t)return t;
-  t=prompt('请输入 GitHub Personal Access Token：\n\n去 https://github.com/settings/tokens\n→ Generate new token (classic)\n✅ 勾选 repo 权限\n\n（仅首次需要，之后会自动记住）','');
+  t=prompt('请输入 GitHub Personal Access Token：\n\n去 https://github.com/settings/tokens\n-> Generate new token (classic)\n勾选 repo 权限\n\n（仅首次需要，之后会自动记住）','');
   if(!t){alert('需要 Token 才能推送');return null;}
   setGHToken(t);return t;
 }
 
 async function pushAllToGitHub(){
+  // 员工不能推送
+  if (currentRole !== 'admin') {
+    showToast('只有管理员才能推送上线', 'error');
+    return;
+  }
   saveAllLocal();
   clearPushLog();
-
   var token=ensureToken();if(!token)return;
   var btn=document.querySelector('.btn-push');var orig=btn.textContent;
-  btn.textContent='⏳ 推送中...';btn.disabled=true;
-
+  btn.textContent='推送中...';btn.disabled=true;
   try{
-    // Step 1: 上传待处理图片
     var queue = getImgQueue();
     var imgNames = Object.keys(queue);
     if (imgNames.length > 0) {
-      logPush('📷 发现 ' + imgNames.length + ' 张图片待上传...', 'log-info');
+      logPush('发现 ' + imgNames.length + ' 张图片待上传...', 'log-info');
       var uploaded = 0;
       for (var i = 0; i < imgNames.length; i++) {
         var name = imgNames[i];
         try {
-          logPush('  ⬆ 上传: ' + name + ' ...', '');
+          logPush('  上传: ' + name + ' ...', '');
           await pushImage(name, queue[name], token);
-          logPush('  ✅ ' + name + ' 上传成功', 'log-success');
+          logPush('  OK ' + name, 'log-success');
           uploaded++;
         } catch(err) {
-          logPush('  ❌ ' + name + ' 失败: ' + err.message, 'log-error');
+          logPush('  FAIL ' + name + ': ' + err.message, 'log-error');
         }
       }
-
       if (uploaded === imgNames.length) {
-        // 全部上传成功，清空队列
         saveImgQueue({});
-        logPush('🖼️ 全部图片上传完成！', 'log-success');
+        logPush('全部图片上传完成！', 'log-success');
       } else {
-        // 部分失败，保留未成功的
-        logPush('⚠️ 部分图片上传失败，可在下次推送时重试', 'log-warn');
+        logPush('部分图片上传失败，可重试', 'log-warn');
       }
     } else {
-      logPush('📷 无新图片需要上传', 'log-info');
+      logPush('无新图片需要上传', 'log-info');
     }
-
-    // Step 2: 更新 script.js
-    logPush('📝 更新 script.js ...', 'log-info');
+    logPush('更新 script.js ...', 'log-info');
     await pushFile('js/script.js', generateScriptJS(), 'Update inventory + content', token);
-    logPush('✅ script.js 推送成功', 'log-success');
-
+    logPush('script.js 推送成功', 'log-success');
     logPush('', '');
-    logPush('🎉 全部推送完成！1-2分钟后刷新 qianduauto.me 查看效果', 'log-success');
-    showToast('✅ 推送成功！', 'success');
-
+    logPush('全部推送完成！1-2分钟后刷新 qianduauto.me 查看效果', 'log-success');
+    showToast('推送成功！', 'success');
   }catch(err){
-    logPush('❌ 推送失败: ' + err.message, 'log-error');
-    showToast('❌ 推送失败，查看下方日志', 'error');
+    logPush('推送失败: ' + err.message, 'log-error');
+    showToast('推送失败，查看下方日志', 'error');
   }finally{
     btn.textContent=orig;btn.disabled=false;
   }
 }
 
-// 上传单张图片到 GitHub
 async function pushImage(path, base64Data, token) {
-  // base64Data 可能是 data:image/jpeg;base64,xxx 格式，提取纯 base64
   var b64 = base64Data;
   if (b64.indexOf(',') > -1) b64 = b64.split(',')[1];
-
-  // 检查文件是否已存在
   var headRes = await fetch(GITHUB_API+'/repos/'+GITHUB_REPO+'/contents/'+path+'?ref='+GITHUB_BRANCH,{
     headers:{'Authorization':'token '+token}
   });
@@ -1024,11 +1028,8 @@ async function pushImage(path, base64Data, token) {
     var headData = await headRes.json();
     sha = headData.sha;
   }
-
-  // 上传
   var body = { message: 'Add/update ' + path, content: b64, branch: GITHUB_BRANCH };
   if (sha) body.sha = sha;
-
   var pushRes = await fetch(GITHUB_API+'/repos/'+GITHUB_REPO+'/contents/'+path,{
     method:'PUT',
     headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
@@ -1044,7 +1045,6 @@ async function pushFile(path, content, message, token){
   var headRes=await fetch(GITHUB_API+'/repos/'+GITHUB_REPO+'/contents/'+path+'?ref='+GITHUB_BRANCH,{headers:{'Authorization':'token '+token}});
   if(!headRes.ok)throw new Error('获取 '+path+' 失败: '+headRes.status);
   var headData=await headRes.json();
-
   var pushRes=await fetch(GITHUB_API+'/repos/'+GITHUB_REPO+'/contents/'+path,{
     method:'PUT',
     headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
@@ -1053,14 +1053,12 @@ async function pushFile(path, content, message, token){
   if(!pushRes.ok){var e=await pushRes.json();throw new Error(e.message||'推送失败: '+pushRes.status);}
 }
 
-// 生成完整的 script.js
 function generateScriptJS(){
   var invCode=(db.cars||[]).map(function(c){
     return "  { make: \""+c.make+"\", year: \""+c.year+"\", mileage: \""+c.mileage+"\", engine: \""+c.engine+"\", price: \""+c.price+"\", tag: \""+c.tag+"\", image: \""+(c.image||"")+"\" }";
   }).join(',\n');
-
-  return "// Inventory data — real vehicles\nconst inventory = [\n"+invCode+"\n];\n\n"+
-    "// Placeholder icon\nconst placeholderIcon = '<svg width=\"80\" height=\"80\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"1\"><circle cx=\"7\" cy=\"17\" r=\"2\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/><path d=\"M19 17h-2M7 17H5V4h14v13h-2\"/><path d=\"M5 10h14\"/><path d=\"M9 6l1 2M15 6l-1 2\"/></svg>';\n\n"+
+  return "// Inventory data\nconst inventory = [\n"+invCode+"\n];\n\n"+
+    "const placeholderIcon = '<svg width=\"80\" height=\"80\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"1\"><circle cx=\"7\" cy=\"17\" r=\"2\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/><path d=\"M19 17h-2M7 17H5V4h14v13h-2\"/><path d=\"M5 10h14\"/><path d=\"M9 6l1 2M15 6l-1 2\"/></svg>';\n\n"+
     "function renderCarImage(car){\n"+
     "  if(car.image&&(car.image.startsWith('http')||car.image.startsWith('images/'))){return `<img src=\"${car.image}\" alt=\"${car.make}\" style=\"width:100%;height:220px;object-fit:cover\" onerror=\"this.parentElement.innerHTML=placeholderIcon+'<span class=car-tag>${car.tag}</span>'\"><span class=\"car-tag\">${car.tag}</span>`;}\n"+
     "  return placeholderIcon+`<span class=\"car-tag\">${car.tag}</span>`;\n"+
@@ -1076,8 +1074,18 @@ function generateScriptJS(){
 //  启动
 // ============================================================
 loadData();
-renderDashboard();
 
+// 检查登录状态
+var savedRole = sessionStorage.getItem(AUTH_KEY);
+if (savedRole === 'admin' || savedRole === 'staff') {
+  currentRole = savedRole;
+  document.getElementById('loginOverlay').classList.add('hidden');
+  applyRole();
+  renderDashboard();
+} else {
+  // 未登录，显示登录页
+  document.getElementById('loginPassword').focus();
+}
 </script>
 </body>
 </html>
