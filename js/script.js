@@ -6,7 +6,8 @@ const inventory = [
   { make: "Toyota bZ7 (BoZhi 7) 2025 — EV", year: "2026年04月", mileage: "0公里", engine: "纯电 EV", price: "$28,020", tag: "In Stock", image: "images/toyota-bz7-bozhi-7-2025-ev-ms43uuk0.jpg" },
   { make: "BYD Tang L 2025 DM 175KM Drone Player Edition", year: "2025年04月", mileage: "0.32万公里", engine: "自动 / 1.5L PHEV", price: "$27,000", tag: "In Stock", image: "images/byd-tangl-2025-1.png" },
   { make: "Jetour Traveler 2023 2.0T 4WD Cross PRO", year: "2024年07月", mileage: "3公里", engine: "自动 / 2L", price: "$17,145", tag: "In Stock", image: "images/jetour-traveler-2023-2-0t-4wd-cross-pro-ms432a4p.jpg" },
-  { make: "Jetour X70 2022 1.5T DCT Joy 7-Seat", year: "2022年10月", mileage: "2公里", engine: "自动 / 1.5L", price: "$8,568", tag: "New Arrival", image: "images/jetour-x70-2022-1-5t-dct-joy-7-seat-ms431gir.jpg" }
+  { make: "Jetour X70 2022 1.5T DCT Joy 7-Seat", year: "2022年10月", mileage: "2公里", engine: "自动 / 1.5L", price: "$8,568", tag: "New Arrival", image: "images/jetour-x70-2022-1-5t-dct-joy-7-seat-ms431gir.jpg" },
+  { make: "2023 Toyota Corolla 1.2T Elite 5-Seater", year: "2023年03月", mileage: "2公里", engine: "自动 / 1.2L", price: "$11,650", tag: "In Stock", image: "images/2023-toyota-corolla-1-2t-elite-5-seater-ms44gj8z.jpg" }
 ];
 
 // Placeholder icon
