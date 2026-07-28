@@ -1,5 +1,5 @@
-// Inventory data
-const inventory = [
+// Inventory data — 优先从管理后台 localStorage 读取，后台没数据时用默认
+const DEFAULT_INVENTORY = [
   { make: "Land Cruiser 2012, 4.0L Auto VX", year: "2014年07月", mileage: "5.2万公里", engine: "自动 / 4L", price: "USD 63,038", tag: "In Stock", image: "images/land-cruiser-2012-1.jpg" },
   { make: "2016 Toyota Land Cruiser 4.0L Auto VX-R", year: "2016年09月", mileage: "11.1万公里", engine: "自动 / 4L", price: "USD 61,738.60", tag: "In Stock", image: "images/land-cruiser-2016-vxr-1.jpg" },
   { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: "2026年01月", mileage: "0.9万公里", engine: "自动 / 2.4T", price: "USD 75,034", tag: "Premium", image: "images/prado-2025-flagship-vx-1.jpg" },
@@ -10,6 +10,21 @@ const inventory = [
   { make: "2023 Toyota Corolla 1.2T Elite 5-Seater", year: "2023年03月", mileage: "2公里", engine: "自动 / 1.2L", price: "$11,650", tag: "In Stock", image: "images/2023-toyota-corolla-1-2t-elite-5-seater-ms44gj8z.jpg" },
   { make: "2021 Corolla 1.5L CVT Elite", year: "2022年03月", mileage: "2.0万公里", engine: "自动 / 1.5L", price: "$11,794", tag: "In Stock", image: "images/2021-corolla-1-5l-cvt-elite-ms44ltmv.jpg" }
 ];
+
+function loadInventory() {
+  var adminData = localStorage.getItem('qiandu_admin_data');
+  if (adminData) {
+    try {
+      var db = JSON.parse(adminData);
+      if (db.cars && db.cars.length > 0) {
+        return db.cars.filter(function(c) { return c.tag !== 'Sold'; });
+      }
+    } catch(e) {}
+  }
+  return DEFAULT_INVENTORY;
+}
+
+const inventory = loadInventory();
 
 const placeholderIcon = '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M19 17h-2M7 17H5V4h14v13h-2"/><path d="M5 10h14"/><path d="M9 6l1 2M15 6l-1 2"/></svg>';
 
