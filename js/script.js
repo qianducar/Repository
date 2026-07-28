@@ -5,7 +5,7 @@ const inventory = [
   { make: "2025 Toyota Prado 2.4T Flagship VX 5-Seat", year: "2026年01月", mileage: "0.9万公里", engine: "自动 / 2.4T", price: "USD 75,034", tag: "Premium", image: "images/prado-2025-flagship-vx-1.jpg" },
   { make: "Toyota bZ7 (BoZhi 7) 2025 — EV", year: "2026年04月", mileage: "0.3万公里", engine: "纯电 EV", price: "$28,020", tag: "In Stock", image: "images/toyota-bz7-2025-1.jpg" },
   { make: "BYD Tang L 2025 DM 175KM Drone Player Edition", year: "2025年04月", mileage: "0.32万公里", engine: "自动 / 1.5L PHEV", price: "$27,000", tag: "In Stock", image: "images/byd-tangl-2025-1.png" },
-  { make: "Corolla Twin Engine E+ 2019 1.8L E‑CVT Leading Edition", year: "2022年05月", mileage: "3公里", engine: "1.8L", price: "$9,030.58", tag: "In Stock", image: "images/corolla-twin-engine-e-2019-1-8l-e-cvt-le-ms47zj6i.jpg" }
+  { make: "Corolla Twin Engine E+ 2019 1.8L E‑CVT Leading Edition", year: "2022年05月", mileage: "3.0万公里", engine: "1.8L", price: "$9,030.58", tag: "In Stock", image: "images/corolla-twin-engine-e-2019-1-8l-e-cvt-le-ms47zj6i.jpg" }
 ];
 
 // Placeholder icon
