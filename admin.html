@@ -206,7 +206,7 @@
   <div class="actions">
     <span class="role-badge role-admin" id="roleBadge" style="display: none;">🔑 管理员</span>
     <button class="btn-preview" onclick="window.open('/','_blank')">👁 预览网站</button>
-    <button class="btn-push" id="pushBtn" onclick="pushAllToGitHub()" style="display: none;">🚀 Push 上线</button>
+    <button class="btn-push" id="pushBtn" onclick="pushAllToGitHub()" style="display: none;" disabled="">推送中...</button>
     <button class="btn-logout" onclick="doLogout()">退出</button>
   </div>
 </div>
@@ -215,7 +215,7 @@
   <aside class="sidebar">
     <ul class="sidebar-nav" id="sidebarNav">
       <li><a href="#" class="active" data-page="dashboard" onclick="switchPage('dashboard',this)" data-admin="1"><span class="icon">📊</span> Dashboard</a></li>
-      <li><a href="#" data-page="vehicles" onclick="switchPage('vehicles',this)"><span class="icon">🚗</span> 车辆管理</a></li>
+      <li><a href="#" data-page="vehicles" onclick="switchPage('vehicles',this)" class=""><span class="icon">🚗</span> 车辆管理</a></li>
       <li><a href="#" data-page="hero" onclick="switchPage('hero',this)" data-admin="1"><span class="icon">🎯</span> 首页横幅</a></li>
       <li><a href="#" data-page="services" onclick="switchPage('services',this)" data-admin="1"><span class="icon">⚙️</span> 服务介绍</a></li>
       <li><a href="#" data-page="process" onclick="switchPage('process',this)" data-admin="1"><span class="icon">📋</span> 流程步骤</a></li>
