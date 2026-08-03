@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QianduAuto 管理后台</title>
@@ -205,9 +204,9 @@
 <div class="topbar">
   <h1>🚗 QianduAuto <span style="font-weight:400;font-size:14px;color:#aaa;">管理后台</span></h1>
   <div class="actions">
-    <span class="role-badge" id="roleBadge" style="display:none;"></span>
+    <span class="role-badge role-admin" id="roleBadge" style="display: none;">🔑 管理员</span>
     <button class="btn-preview" onclick="window.open('/','_blank')">👁 预览网站</button>
-    <button class="btn-push" id="pushBtn" onclick="pushAllToGitHub()" style="display:none;">🚀 Push 上线</button>
+    <button class="btn-push" id="pushBtn" onclick="pushAllToGitHub()" style="display: none;">🚀 Push 上线</button>
     <button class="btn-logout" onclick="doLogout()">退出</button>
   </div>
 </div>
@@ -235,16 +234,17 @@
         <p>网站概览与快速操作</p>
       </div>
       <div class="stats-row">
-        <div class="stat-card c1"><div class="num" id="d-total">0</div><div class="label">总车辆数</div></div>
+        <div class="stat-card c1"><div class="num" id="d-total">5</div><div class="label">总车辆数</div></div>
         <div class="stat-card c2"><div class="num" id="d-sold">0</div><div class="label">已售出</div></div>
-        <div class="stat-card c3"><div class="num" id="d-ev">0</div><div class="label">新能源 EV</div></div>
-        <div class="stat-card c4"><div class="num" id="d-ice">0</div><div class="label">燃油车 ICE</div></div>
+        <div class="stat-card c3"><div class="num" id="d-ev">2</div><div class="label">新能源 EV</div></div>
+        <div class="stat-card c4"><div class="num" id="d-ice">3</div><div class="label">燃油车 ICE</div></div>
       </div>
       <div class="editor-section">
         <h3>🚀 快速上线</h3>
         <p style="color:#666;margin-bottom:16px;font-size:14px;">修改完任何内容后，点击此按钮将所有更改（含图片）推送到线上网站。</p>
         <button class="btn-primary" onclick="pushAllToGitHub()">🚀 推送所有更改到 GitHub Pages</button>
         <button class="btn-secondary" style="margin-left:10px;" onclick="saveAllLocal()">💾 仅保存本地（不推送）</button>
+        <button class="btn-secondary" style="margin-left:10px;background:#fff3cd;color:#856404;border:1px solid #ffc107;" onclick="deployFixOnly()">🔧 部署修复（仅更新后台代码，不动车辆数据）</button>
         <div class="push-log" id="pushLog"></div>
       </div>
     </div>
@@ -263,9 +263,9 @@
     <div class="page" id="page-hero">
       <div class="page-header"><h2>🎯 首页横幅设置</h2><p>Hero 区域的标题、描述、统计数据</p></div>
       <div class="editor-section">
-        <h3>主标题 & 描述</h3>
+        <h3>主标题 &amp; 描述</h3>
         <div class="form-group"><label>标语 Badge</label><input type="text" id="hero-badge" placeholder="Premium Used Car Export"></div>
-        <div class="form-group"><label>主标题第1行</label><input type="text" id="hero-title1" placeholder="Quality Vehicles," ></div>
+        <div class="form-group"><label>主标题第1行</label><input type="text" id="hero-title1" placeholder="Quality Vehicles,"></div>
         <div class="form-group"><label>主标题第2行（高亮色）</label><input type="text" id="hero-title2" placeholder="Global Delivery"></div>
         <div class="form-group"><label>描述文字</label><textarea id="hero-desc" rows="3" placeholder="Trusted exporter of pre-owned vehicles..."></textarea></div>
         <div class="form-row">
@@ -334,7 +334,7 @@
       <div class="editor-section">
         <h3>特色亮点（4项）</h3>
         <div class="form-row-3">
-          <div class="form-group"><label>亮点1</label><input type="text" id="about-f1" placeholder="Licensed & Compliant"></div>
+          <div class="form-group"><label>亮点1</label><input type="text" id="about-f1" placeholder="Licensed &amp; Compliant"></div>
           <div class="form-group"><label>亮点2</label><input type="text" id="about-f2" placeholder="500+ Vehicles Exported"></div>
           <div class="form-group"><label>亮点3</label><input type="text" id="about-f3" placeholder="Global Shipping Network"></div>
         </div>
@@ -1006,14 +1006,53 @@ async function pushAllToGitHub(){
     logPush('更新 script.js ...', 'log-info');
     await pushFile('js/script.js', generateScriptJS(), 'Update inventory + content', token);
     logPush('script.js 推送成功', 'log-success');
+
+    logPush('更新 index.html (缓存破坏) ...', 'log-info');
+    try { await pushIndexHTML(token); logPush('index.html 更新成功', 'log-success'); }
+    catch(e) { logPush('index.html 更新失败: '+e.message+' (不影响车辆数据)', 'log-warn'); }
+
+    logPush('更新 admin.html ...', 'log-info');
+    try { await pushSelf(token); logPush('admin.html 推送成功', 'log-success'); }
+    catch(e) { logPush('admin.html 推送失败: '+e.message+' (不影响网站)', 'log-warn'); }
+
     logPush('', '');
-    logPush('全部推送完成！1-2分钟后刷新 qianduauto.me 查看效果', 'log-success');
+    logPush('全部推送完成！刷新 qianduauto.me 查看效果', 'log-success');
     showToast('推送成功！', 'success');
   }catch(err){
     logPush('推送失败: ' + err.message, 'log-error');
     showToast('推送失败，查看下方日志', 'error');
   }finally{
     btn.textContent=orig;btn.disabled=false;
+  }
+}
+
+// 仅部署后台修复（不推送车辆数据，适合从本地文件运行）
+async function deployFixOnly(){
+  if (currentRole !== 'admin') {
+    showToast('只有管理员才能部署', 'error');
+    return;
+  }
+  clearPushLog();
+  var token=ensureToken();if(!token)return;
+  logPush('🔧 开始部署修复...', 'log-info');
+  logPush('此操作仅更新 admin.html 和 index.html，不改动车辆数据', 'log-info');
+  logPush('', '');
+  try{
+    logPush('推送 admin.html (修复版) ...', 'log-info');
+    await pushSelf(token);
+    logPush('admin.html 推送成功！', 'log-success');
+
+    logPush('更新 index.html (缓存破坏) ...', 'log-info');
+    try { await pushIndexHTML(token); logPush('index.html 更新成功', 'log-success'); }
+    catch(e) { logPush('index.html 跳过: '+e.message, 'log-warn'); }
+
+    logPush('', '');
+    logPush('✅ 修复部署完成！', 'log-success');
+    logPush('下一步：打开 qianduauto.me/admin.html 登录后正常推送车辆', 'log-info');
+    showToast('修复部署成功！', 'success');
+  }catch(err){
+    logPush('部署失败: ' + err.message, 'log-error');
+    showToast('部署失败，查看下方日志', 'error');
   }
 }
 
@@ -1053,23 +1092,52 @@ async function pushFile(path, content, message, token){
   if(!pushRes.ok){var e=await pushRes.json();throw new Error(e.message||'推送失败: '+pushRes.status);}
 }
 
+// 推送 admin.html 自身到 GitHub（保持修复持久化）
+async function pushSelf(token){
+  var clone=document.documentElement.cloneNode(true);
+  // 清理动态状态，还原为初始 HTML
+  var lo=clone.querySelector('#loginOverlay'); if(lo) lo.classList.remove('hidden');
+  var rb=clone.querySelector('#roleBadge'); if(rb) rb.style.display='none';
+  var pb=clone.querySelector('#pushBtn'); if(pb) pb.style.display='none';
+  var sn=clone.querySelector('#staffNotice'); if(sn) sn.classList.remove('show');
+  var cm=clone.querySelector('#carModal'); if(cm) cm.classList.remove('show');
+  var pl=clone.querySelector('#pushLog'); if(pl){pl.innerHTML='';pl.classList.remove('show');}
+  var ts=clone.querySelector('#toast'); if(ts){ts.className='toast';ts.textContent='';}
+  var cl=clone.querySelector('#carList'); if(cl) cl.innerHTML='';
+  var sg=clone.querySelector('#svcGrid'); if(sg) sg.innerHTML='';
+  var stg=clone.querySelector('#stepGrid'); if(stg) stg.innerHTML='';
+  // 清空表单
+  clone.querySelectorAll('input[type="text"],input[type="password"],input[type="number"],input[type="email"],textarea').forEach(function(el){el.value='';});
+  // 重置侧边栏
+  clone.querySelectorAll('.sidebar-nav a').forEach(function(a){a.classList.remove('active');});
+  var dl=clone.querySelector('.sidebar-nav a[data-page="dashboard"]'); if(dl) dl.classList.add('active');
+  clone.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var dp=clone.querySelector('#page-dashboard'); if(dp) dp.classList.add('active');
+
+  var html='<!DOCTYPE html>\n'+clone.outerHTML;
+  await pushFile('admin.html',html,'Update admin panel (fix push)',token);
+}
+
+// 更新 index.html 的 script.js 引用，加缓存破坏参数
+async function pushIndexHTML(token){
+  var res=await fetch(GITHUB_API+'/repos/'+GITHUB_REPO+'/contents/index.html?ref='+GITHUB_BRANCH,{headers:{'Authorization':'token '+token}});
+  if(!res.ok) throw new Error('获取 index.html 失败: '+res.status);
+  var data=await res.json();
+  var html=decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+  // 替换 script.js 引用，加版本号
+  var ver=Date.now();
+  html=html.replace(/js\/script\.js(\?v=\d+)?/g,'js/script.js?v='+ver);
+  await pushFile('index.html',html,'Cache bust: script.js?v='+ver,token);
+}
+
 function generateScriptJS(){
   var invCode=(db.cars||[]).map(function(c){
     return "  { make: \""+c.make+"\", year: \""+c.year+"\", mileage: \""+c.mileage+"\", engine: \""+c.engine+"\", price: \""+c.price+"\", tag: \""+c.tag+"\", image: \""+(c.image||"")+"\" }";
   }).join(',\n');
-  return "// Inventory data — 优先从管理后台 localStorage 读取，后台没数据时用默认\n"+
+  return "// Inventory data — 始终使用推送后的数据，不读 localStorage\n"+
     "const DEFAULT_INVENTORY = [\n"+invCode+"\n];\n\n"+
     "function loadInventory() {\n"+
-    "  var adminData = localStorage.getItem('qiandu_admin_data');\n"+
-    "  if (adminData) {\n"+
-    "    try {\n"+
-    "      var db = JSON.parse(adminData);\n"+
-    "      if (db.cars && db.cars.length > 0) {\n"+
-    "        return db.cars.filter(function(c) { return c.tag !== 'Sold'; });\n"+
-    "      }\n"+
-    "    } catch(e) {}\n"+
-    "  }\n"+
-    "  return DEFAULT_INVENTORY;\n"+
+    "  return DEFAULT_INVENTORY.filter(function(c) { return c.tag !== 'Sold'; });\n"+
     "}\n\n"+
     "const inventory = loadInventory();\n\n"+
     "const placeholderIcon = '<svg width=\"80\" height=\"80\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"1\"><circle cx=\"7\" cy=\"17\" r=\"2\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/><path d=\"M19 17h-2M7 17H5V4h14v13h-2\"/><path d=\"M5 10h14\"/><path d=\"M9 6l1 2M15 6l-1 2\"/></svg>';\n\n"+
@@ -1101,5 +1169,6 @@ if (savedRole === 'admin' || savedRole === 'staff') {
   document.getElementById('loginPassword').focus();
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
