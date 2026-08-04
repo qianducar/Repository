@@ -216,7 +216,7 @@
     <ul class="sidebar-nav" id="sidebarNav">
       <li><a href="#" class="active" data-page="dashboard" onclick="switchPage('dashboard',this)" data-admin="1"><span class="icon">📊</span> Dashboard</a></li>
       <li><a href="#" data-page="vehicles" onclick="switchPage('vehicles',this)" class=""><span class="icon">🚗</span> 车辆管理</a></li>
-      <li><a href="#" data-page="hero" onclick="switchPage('hero',this)" data-admin="1"><span class="icon">🎯</span> 首页横幅</a></li>
+      <li><a href="#" data-page="hero" onclick="switchPage('hero',this)" data-admin="1" class=""><span class="icon">🎯</span> 首页横幅</a></li>
       <li><a href="#" data-page="services" onclick="switchPage('services',this)" data-admin="1"><span class="icon">⚙️</span> 服务介绍</a></li>
       <li><a href="#" data-page="process" onclick="switchPage('process',this)" data-admin="1"><span class="icon">📋</span> 流程步骤</a></li>
       <li><a href="#" data-page="about" onclick="switchPage('about',this)" data-admin="1"><span class="icon">🏢</span> 关于我们</a></li>
@@ -234,10 +234,10 @@
         <p>网站概览与快速操作</p>
       </div>
       <div class="stats-row">
-        <div class="stat-card c1"><div class="num" id="d-total">10</div><div class="label">总车辆数</div></div>
+        <div class="stat-card c1"><div class="num" id="d-total">12</div><div class="label">总车辆数</div></div>
         <div class="stat-card c2"><div class="num" id="d-sold">0</div><div class="label">已售出</div></div>
         <div class="stat-card c3"><div class="num" id="d-ev">2</div><div class="label">新能源 EV</div></div>
-        <div class="stat-card c4"><div class="num" id="d-ice">8</div><div class="label">燃油车 ICE</div></div>
+        <div class="stat-card c4"><div class="num" id="d-ice">10</div><div class="label">燃油车 ICE</div></div>
       </div>
       <div class="editor-section">
         <h3>🚀 快速上线</h3>
@@ -379,8 +379,8 @@
 <!-- ===== 车辆弹窗 ===== -->
 <div class="modal-overlay" id="carModal">
   <div class="modal">
-    <h2 id="carModalTitle">添加车辆</h2>
-    <input type="hidden" id="carEditId">
+    <h2 id="carModalTitle">编辑车辆</h2>
+    <input type="hidden" id="carEditId" value="1">
     <div class="form-group"><label>车型名称 *</label><input type="text" id="cf-model" placeholder="例：Toyota Land Cruiser 2024"></div>
     <div class="form-row">
       <div class="form-group"><label>类型</label><select id="cf-type"><option value="ICE">燃油车 ICE</option><option value="EV">新能源 EV</option><option value="PHEV">插电混动 PHEV</option></select></div>
@@ -396,18 +396,18 @@
     </div>
     <div class="form-group">
       <label>车辆照片 📷</label>
-      <div class="image-upload-zone" id="imageDropZone" onclick="document.getElementById('imageFileInput').click()">
-        <div class="upload-placeholder" id="uploadPlaceholder">
+      <div class="image-upload-zone has-image" id="imageDropZone" onclick="document.getElementById('imageFileInput').click()">
+        <div class="upload-placeholder" id="uploadPlaceholder" style="display: none;">
           <div class="upload-icon">🖼️</div>
           <div class="upload-text">拖拽照片到此处<br>或点击选择文件</div>
           <div class="upload-hint">支持 JPG、PNG、WebP，自动压缩</div>
         </div>
-        <img class="preview-img" id="imagePreview" style="display:none" alt="预览">
-        <div class="preview-actions" id="previewActions" style="display:none">
+        <img class="preview-img" id="imagePreview" style="display: block;" alt="预览" src="/images/land-cruiser-2016-vxr-1.jpg">
+        <div class="preview-actions" id="previewActions" style="display: flex;">
           <button class="btn-replace" onclick="event.stopPropagation();document.getElementById('imageFileInput').click()">🔄 更换</button>
           <button class="btn-remove" onclick="event.stopPropagation();removeImage()">🗑 删除</button>
         </div>
-        <div class="preview-info" id="previewInfo" style="display:none"></div>
+        <div class="preview-info" id="previewInfo" style="display: block;">线上图片: images/land-cruiser-2016-vxr-1.jpg</div>
         <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageSelect(event)" onclick="event.stopPropagation()">
       </div>
     </div>
