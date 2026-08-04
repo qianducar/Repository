@@ -11,7 +11,8 @@ const DEFAULT_INVENTORY = [
   { make: "2021 Corolla 1.5L CVT Elite", year: "2022年03月", mileage: "2.0万公里", engine: "自动 / 1.5L", price: "$11,794", tag: "In Stock", image: "images/2021-corolla-1-5l-cvt-elite-ms44ltmv.jpg" },
   { make: "BYD Yuan Plus 2023 Champion Edition 430KM Leading Type", year: "2023年05月", mileage: "3.0万公里", engine: "自动 / 0L", price: "$8,040", tag: "In Stock", image: "images/byd-yuan-plus-2023-champion-edition-430k-mscxar17.jpg" },
   { make: "Changan CS75 Plus 2021", year: "2021年10月", mileage: "3.0万公里", engine: "自动 / 1.5L", price: "$9,444", tag: "In Stock", image: "images/changan-cs75-plus-2021-mse8jeq4.jpg" },
-  { make: "ChanganCS35PLUS 2022", year: "2022年10月", mileage: "2.3万公里", engine: "自动 / 1.4L", price: "$6.98", tag: "In Stock", image: "images/changancs35plus-2022-mse8ng29.jpg" }
+  { make: "ChanganCS35PLUS 2022", year: "2022年10月", mileage: "2.3万公里", engine: "自动 / 1.4L", price: "$6.98", tag: "In Stock", image: "images/changancs35plus-2022-mse8ng29.jpg" },
+  { make: "Toyota Camry 2019", year: "2020年08月", mileage: "8.0万公里", engine: "自动 / 2L", price: "$11,930", tag: "In Stock", image: "images/toyota-camry-2019-mse934ir.jpg" }
 ];
 
 function loadInventory() {
