@@ -65,7 +65,7 @@ function fmtEngine(s,l){
 const CONTACT = {
   whatsapp: '8615996924305',           // +86 159 9692 4305
   telegram: 'https://t.me/bai_auto_kz',
-  email: 'hello@qianduauto.me'
+  email: 'jw156890@outlook.com'
 };
 const WA_PREFIX = {
   en: 'Hello! I am interested in: ',
