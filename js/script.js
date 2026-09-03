@@ -11,7 +11,7 @@ const DEFAULT_INVENTORY = [
   { make: "2021 Corolla 1.5L CVT Elite", year: "2022年03月", mileage: "2.0万公里", engine: "自动 / 1.5L", price: "$11,794", tag: "In Stock", image: "images/2021-corolla-1-5l-cvt-elite-ms44ltmv.jpg" },
   { make: "BYD Yuan Plus 2023 Champion Edition 430KM Leading Type", year: "2023年05月", mileage: "3.0万公里", engine: "自动 / 0L", price: "$8,040", tag: "In Stock", image: "images/byd-yuan-plus-2023-champion-edition-430k-mscxar17.jpg" },
   { make: "Changan CS75 Plus 2021", year: "2021年10月", mileage: "3.0万公里", engine: "自动 / 1.5L", price: "$9,444", tag: "In Stock", image: "images/changan-cs75-plus-2021-mse8jeq4.jpg" },
-  { make: "ChanganCS35PLUS 2022", year: "2022年10月", mileage: "2.3万公里", engine: "自动 / 1.4L", price: "$6.98", tag: "In Stock", image: "images/changancs35plus-2022-mse8ng29.jpg" },
+  { make: "ChanganCS35PLUS 2022", year: "2022年10月", mileage: "2.3万公里", engine: "自动 / 1.4L", price: "$6,980", tag: "In Stock", image: "images/changancs35plus-2022-mse8ng29.jpg" },
   { make: "Toyota Camry 2019", year: "2020年08月", mileage: "8.0万公里", engine: "自动 / 2L", price: "$11,930", tag: "In Stock", image: "images/toyota-camry-2019-mse934ir.jpg" }
 ];
 
@@ -28,9 +28,47 @@ function renderCarImage(car){
   return placeholderIcon+`<span class="car-tag">${car.tag}</span>`;
 }
 
-function renderInventory(){
-  const grid=document.getElementById('inventoryGrid');if(!grid)return;
-  grid.innerHTML=inventory.map(car=>`<div class="car-card"><div class="car-image">${renderCarImage(car)}</div><div class="car-info"><h3>${car.year} ${car.make}</h3><div class="car-specs"><span>${car.mileage}</span><span>${car.engine}</span></div><div class="car-price">${car.price} <span class="car-price-note">FOB</span></div><div class="car-actions"><button class="btn btn-outline-sm" onclick="document.getElementById(\'contact\').scrollIntoView({behavior:\'smooth\'})">Inquire</button><button class="btn btn-primary-sm" onclick="document.getElementById(\'contact\').scrollIntoView({behavior:\'smooth\'})">Details</button></div></div></div>`).join('');
+// ===== 联系渠道（WhatsApp / Telegram）=====
+const CONTACT = {
+  whatsapp: '8615996924305',           // +86 159 9692 4305
+  telegram: 'https://t.me/bai_auto_kz',
+  email: 'hello@qianduauto.me'
+};
+const WA_PREFIX = {
+  en: 'Hello! I am interested in: ',
+  zh: '你好！我对这辆车感兴趣：',
+  ru: 'Здравствуйте! Меня интересует: '
+};
+function lang(){ try{ return localStorage.getItem('lang')||'en'; }catch(e){ return 'en'; } }
+function waLink(text){ return 'https://wa.me/'+CONTACT.whatsapp+'?text='+encodeURIComponent(text); }
+function carLabel(car){ return car.year+' '+car.make+' ('+car.price+' FOB)'; }
+function askCar(i){
+  var p = WA_PREFIX[lang()] || WA_PREFIX.en;
+  window.open(waLink(p+carLabel(inventory[i])), '_blank');
 }
 
-document.addEventListener('DOMContentLoaded',()=>{renderInventory();});
+function renderInventory(){
+  const grid=document.getElementById('inventoryGrid');if(!grid)return;
+  grid.innerHTML=inventory.map((car,i)=>`<div class="car-card"><div class="car-image">${renderCarImage(car)}</div><div class="car-info"><h3>${car.year} ${car.make}</h3><div class="car-specs"><span>${car.mileage}</span><span>${car.engine}</span></div><div class="car-price">${car.price} <span class="car-price-note">FOB</span></div><div class="car-actions"><button class="btn btn-primary-sm" onclick="askCar(${i})">Inquire</button><button class="btn btn-outline-sm" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Details</button></div></div></div>`).join('');
+}
+
+// 询盘表单：无后端邮箱，提交后直达 WhatsApp 收询盘
+function initContactForm(){
+  const f=document.getElementById('contactForm'); if(!f) return;
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    const v=function(id){const el=document.getElementById(id);return el?(el.value||'').trim():'';};
+    const interest=(document.getElementById('interest')||{}).value||'';
+    const lines=[
+      'New inquiry — qianduauto.me','',
+      'Name: '+v('name'),
+      'Email: '+v('email'),
+      'Country: '+v('country'),
+      'Interest: '+interest,'',
+      'Message: '+v('message')
+    ];
+    const p = WA_PREFIX[lang()] || WA_PREFIX.en;
+    window.open(waLink(p+'\n'+lines.join('\n')), '_blank');
+  });
+}
+document.addEventListener('DOMContentLoaded',()=>{renderInventory();initContactForm();});

@@ -138,6 +138,23 @@ ul { list-style: none; }
 .footer-links a:hover { color: var(--accent); }
 .footer-contact p { font-size: 14px; margin-bottom: 8px; color: rgba(255,255,255,0.5); }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 24px 0; text-align: center; font-size: 13px; color: rgba(255,255,255,0.3); }
+.contact-detail a { color: rgba(255,255,255,0.85); transition: color 0.2s; }
+.contact-detail a:hover { color: #fff; }
+.contact-channels { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.btn-channel { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 600; color: #fff !important; transition: all 0.25s; }
+.btn-channel:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.channel-wa { background: #25D366; }
+.channel-tg { background: #229ED9; }
+.channel-mail { background: var(--primary-light); }
+/* Floating contact buttons */
+.float-contact { position: fixed; right: 20px; bottom: 20px; z-index: 9990; display: flex; flex-direction: column; gap: 12px; }
+.float-btn { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.25); transition: transform 0.2s; }
+.float-btn:hover { transform: scale(1.08); }
+.float-wa { background: #25D366; }
+.float-tg { background: #229ED9; }
+/* Footer links clickable color */
+.footer-contact a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
+.footer-contact a:hover { color: var(--accent); }
 /* Toast notification */
 .toast { position: fixed; bottom: 32px; right: 32px; background: #10b981; color: #fff; padding: 16px 24px; border-radius: var(--radius); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 9999; }
 .toast.show { opacity: 1; transform: translateY(0); }
