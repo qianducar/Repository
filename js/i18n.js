@@ -113,6 +113,9 @@ const translations = {
   
   // 保存选择到localStorage
   localStorage.setItem('lang', lang);
+  
+  // 车辆卡片数据(年份/里程/变速箱)按语言重新渲染
+  if (typeof renderInventory === 'function') renderInventory();
 }
 
 // 页面加载时恢复语言选择

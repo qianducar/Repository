@@ -28,6 +28,39 @@ function renderCarImage(car){
   return placeholderIcon+`<span class="car-tag">${car.tag}</span>`;
 }
 
+// ===== 车辆数据本地化：源数据为中文(如"2014年07月"/"2.4万公里"/"自动")，展示时按当前语言格式化 =====
+function pad2(n){ return (n<10?'0':'')+n; }
+function fmtRegDate(s,l){
+  // s 形如 "2014年07月"，返回: zh 原样 / en 07/2014 / ru 07.2014
+  if(!s) return '';
+  const m=s.match(/(\d{4})\s*年\s*(\d{1,2})\s*月/);
+  if(!m) return s;
+  if(l==='zh') return s;
+  return (l==='ru') ? pad2(+m[2])+'.'+m[1] : pad2(+m[2])+'/'+m[1];
+}
+function kmValue(s){
+  // "2.4万公里" -> 24000; "5000公里" -> 5000; "0公里"/"1公里" -> 0/1
+  if(!s) return null;
+  let m=s.match(/([\d.]+)\s*万\s*公里/); if(m) return Math.round(parseFloat(m[1])*10000);
+  m=s.match(/([\d.]+)\s*公里/); if(m) return Math.round(parseFloat(m[1]));
+  m=s.match(/([\d.]+)\s*km/i); if(m) return Math.round(parseFloat(m[1]));
+  return null;
+}
+function fmtMileage(s,l){
+  if(l==='zh') return s;
+  const km=kmValue(s);
+  if(km===null) return s||'';
+  if(l==='ru') return String(km).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' км';
+  return km.toLocaleString('en-US')+' km';
+}
+function fmtEngine(s,l){
+  if(l==='zh') return s;
+  let o=s||'';
+  if(l==='ru') o=o.replace(/纯电\s*EV/g,'Электро (EV)').replace(/自动/g,'Автомат').replace(/手动/g,'Механика');
+  else o=o.replace(/纯电\s*EV/g,'Electric (EV)').replace(/自动/g,'Automatic').replace(/手动/g,'Manual');
+  return o;
+}
+
 // ===== 联系渠道（WhatsApp / Telegram）=====
 const CONTACT = {
   whatsapp: '8615996924305',           // +86 159 9692 4305
@@ -41,7 +74,7 @@ const WA_PREFIX = {
 };
 function lang(){ try{ return localStorage.getItem('lang')||'en'; }catch(e){ return 'en'; } }
 function waLink(text){ return 'https://wa.me/'+CONTACT.whatsapp+'?text='+encodeURIComponent(text); }
-function carLabel(car){ return car.year+' '+car.make+' ('+car.price+' FOB)'; }
+function carLabel(car){ return fmtRegDate(car.year,lang())+' '+car.make+' ('+car.price+' FOB)'; }
 function askCar(i){
   var p = WA_PREFIX[lang()] || WA_PREFIX.en;
   window.open(waLink(p+carLabel(inventory[i])), '_blank');
@@ -49,7 +82,7 @@ function askCar(i){
 
 function renderInventory(){
   const grid=document.getElementById('inventoryGrid');if(!grid)return;
-  grid.innerHTML=inventory.map((car,i)=>`<div class="car-card"><div class="car-image">${renderCarImage(car)}</div><div class="car-info"><h3>${car.year} ${car.make}</h3><div class="car-specs"><span>${car.mileage}</span><span>${car.engine}</span></div><div class="car-price">${car.price} <span class="car-price-note">FOB</span></div><div class="car-actions"><button class="btn btn-primary-sm" onclick="askCar(${i})">Inquire</button><button class="btn btn-outline-sm" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Details</button></div></div></div>`).join('');
+  grid.innerHTML=inventory.map((car,i)=>{const l=lang();return `<div class="car-card"><div class="car-image">${renderCarImage(car)}</div><div class="car-info"><h3>${fmtRegDate(car.year,l)} ${car.make}</h3><div class="car-specs"><span>${fmtMileage(car.mileage,l)}</span><span>${fmtEngine(car.engine,l)}</span></div><div class="car-price">${car.price} <span class="car-price-note">FOB</span></div><div class="car-actions"><button class="btn btn-primary-sm" onclick="askCar(${i})">Inquire</button><button class="btn btn-outline-sm" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Details</button></div></div></div>`;}).join('');
 }
 
 // 询盘表单：无后端邮箱，提交后直达 WhatsApp 收询盘
