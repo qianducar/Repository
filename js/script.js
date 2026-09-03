@@ -104,4 +104,37 @@ function initContactForm(){
     window.open(waLink(p+'\n'+lines.join('\n')), '_blank');
   });
 }
+// ===== 统计数字滚动动画 =====
+function animateStats(){
+  const els=document.querySelectorAll('.stat-number[data-target]');
+  if(!els.length) return;
+  const dur=1500;
+  els.forEach(el=>{
+    const target=parseInt(el.dataset.target,10)||0;
+    const start=performance.now();
+    const step=now=>{
+      const p=Math.min((now-start)/dur,1);
+      const ease=1-Math.pow(1-p,3); // easeOutCubic
+      el.textContent=Math.round(target*ease);
+      if(p<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+// 滚动到统计区时触发一次
+(function(){
+  var triggered=false;
+  var obs;
+  function onVisible(entries){
+    entries.forEach(function(e){ if(e.isIntersecting && !triggered){ triggered=true; animateStats(); if(obs) obs.disconnect(); } });
+  }
+  if(typeof IntersectionObserver!=='undefined'){
+    obs=new IntersectionObserver(onVisible,{threshold:0.3});
+    var sec=document.querySelector('.hero-stats'); if(sec) obs.observe(sec);
+  } else {
+    // 降级：DOMReady 直接跑
+    document.addEventListener('DOMContentLoaded',animateStats);
+  }
+})();
+
 document.addEventListener('DOMContentLoaded',()=>{renderInventory();initContactForm();});
