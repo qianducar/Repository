@@ -66,10 +66,10 @@ const translations = {
   // About
   "about-tag": { en: "About Us", zh: "关于我们", ru: "О нас" },
   "about-title": { en: "Your Trusted Partner in Used Car Export", zh: "您值得信赖的二手车出口伙伴", ru: "Ваш надежный партнер по экспорту" },
-  "about-p1": { en: "With over 8 years in the automotive export industry, Qiandu Auto has built a reputation for reliability, quality, and competitive pricing. We connect global buyers with China vast automotive market.", zh: "Qiandu Auto 拥有超过8年汽车出口经验，以可靠、优质和具有竞争力的价格赢得了良好声誉。我们将全球买家与中国庞大的汽车市场连接起来。", ru: "Более 8 лет в индустрии экспорта. Qiandu Auto заслужила репутацию надежности, качества и конкурентоспособных цен." },
+  "about-p1": { en: "With over 3 years in the automotive export industry, Qiandu Auto has built a reputation for reliability, quality, and competitive pricing. We connect global buyers with China's vast automotive market.", zh: "Qiandu Auto 拥有3年+汽车出口经验，以可靠、优质和具有竞争力的价格赢得了良好声誉。我们将全球买家与中国庞大的汽车市场连接起来。", ru: "Более 3 лет в индустрии экспорта автомобилей. Qiandu Auto заслужила репутацию надежности, качества и конкурентоспособных цен." },
   "about-p2": { en: "Our team conducts rigorous quality checks on every vehicle, ensures complete documentation, and manages logistics from pickup to port delivery. Whether you need one vehicle or a container load, we deliver.", zh: "我们的团队对每辆车进行严格的质量检查，确保文件齐全，管理从提车到港口交付的全套物流。无论您需要一辆车还是一整柜，我们都能交付。", ru: "Наша команда проводит строгие проверки, оформляет документы и управляет логистикой от забора до порта." },
   "about-feat1": { en: "Licensed & Compliant", zh: "资质齐全", ru: "Лицензировано" },
-  "about-feat2": { en: "500+ Vehicles Exported", zh: "500+车辆出口", ru: "500+ авто экспортировано" },
+  "about-feat2": { en: "100+ Vehicles Exported", zh: "100+辆汽车出口", ru: "100+ автомобилей экспортировано" },
   "about-feat3": { en: "Global Shipping Network", zh: "全球物流网络", ru: "Глобальная логистика" },
   "about-feat4": { en: "Dedicated Account Manager", zh: "专属客户经理", ru: "Персональный менеджер" },
 
